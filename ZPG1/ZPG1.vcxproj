@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{34742f3e-d027-4411-a6ab-46e40c54c9bb}</ProjectGuid>
+    <RootNamespace>ZPG1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\include;C:\Users\zahry\Documents\zpg_dependencies\glm-master\glm-master;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\lib\Release\x64;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="BlinnShader.cpp" />
+    <ClCompile Include="BlueShader.cpp" />
+    <ClCompile Include="ConstantShader.cpp" />
+    <ClCompile Include="ConstantShader.vert" />
+    <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="ForestScene.cpp" />
+    <ClCompile Include="GiftModel.cpp" />
+    <ClCompile Include="LambertShader.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightTestScene.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="PhongShader.cpp" />
+    <ClCompile Include="BushModel.cpp" />
+    <ClCompile Include="CallbackController.cpp" />
+    <ClCompile Include="CallBacks.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="DrawableModel.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PlainModel.cpp" />
+    <ClCompile Include="PlanetScene.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="RainbowShader.cpp" />
+    <ClCompile Include="RedShader.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RotationTransformation.cpp" />
+    <ClCompile Include="ScaleTransformation.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneOne.cpp" />
+    <ClCompile Include="SceneThree.cpp" />
+    <ClCompile Include="SceneTwo.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="SizeScene.cpp" />
+    <ClCompile Include="SphereModel.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="SquareModel.cpp" />
+    <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="SuziModel.cpp" />
+    <ClCompile Include="Transformation.cpp" />
+    <ClCompile Include="TransformationComposite.cpp" />
+    <ClCompile Include="TranslationTransformation.cpp" />
+    <ClCompile Include="TreeModel.cpp" />
+    <ClCompile Include="TriangleModel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BlinnShader.h" />
+    <ClInclude Include="BlueShader.h" />
+    <ClInclude Include="ConstantShader.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="ForestScene.h" />
+    <ClInclude Include="Gift.h" />
+    <ClInclude Include="GiftModel.h" />
+    <ClInclude Include="LambertShader.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightTestScene.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="PhongShader.h" />
+    <ClInclude Include="Bushes.h" />
+    <ClInclude Include="BushModel.h" />
+    <ClInclude Include="CallbackController.h" />
+    <ClInclude Include="CallBacks.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="DrawableModel.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="Plain.h" />
+    <ClInclude Include="PlainModel.h" />
+    <ClInclude Include="PlanetScene.h" />
+    <ClInclude Include="PointLight.h" />
+    <ClInclude Include="RainbowShader.h" />
+    <ClInclude Include="RedShader.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RotationTransformation.h" />
+    <ClInclude Include="ScaleTransformation.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneOne.h" />
+    <ClInclude Include="SceneThree.h" />
+    <ClInclude Include="SceneTwo.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="SizeScene.h" />
+    <ClInclude Include="Sphere.h" />
+    <ClInclude Include="SphereModel.h" />
+    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="SquareModel.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="suziFlat.h" />
+    <ClInclude Include="SuziModel.h" />
+    <ClInclude Include="suziSmooth.h" />
+    <ClInclude Include="Transformation.h" />
+    <ClInclude Include="TransformationComposite.h" />
+    <ClInclude Include="TranslationTransformation.h" />
+    <ClInclude Include="Tree.h" />
+    <ClInclude Include="TreeModel.h" />
+    <ClInclude Include="TriangleModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BlinnShader.frag" />
+    <None Include="BlinnShader.vert" />
+    <None Include="BlueShader.frag" />
+    <None Include="BlueShader.vert" />
+    <None Include="ConstantShader.frag" />
+    <None Include="LambertShader.frag" />
+    <None Include="LambertShader.vert" />
+    <None Include="PhongShader.frag" />
+    <None Include="PhongShader.vert" />
+    <None Include="RainbowShader.frag" />
+    <None Include="RainbowShader.vert" />
+    <None Include="RedShader.frag" />
+    <None Include="RedShader.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
