@@ -25,6 +25,7 @@
 #include "RotationTransformation.h"
 #include "TranslationTransformation.h"
 #include "ScaleTransformation.h"
+#include "RotationAroundObjectTransformation.h"
 
 #include "CubeModel.h"
 #include "SphereModel.h"
@@ -42,6 +43,7 @@
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "SpotLight.h"
+#include "PhongShaderMultipleLights.h"
 
 class Scene
 {

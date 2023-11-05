@@ -4,6 +4,6 @@
 class RainbowShader : public Shader
 {
 public:
-	RainbowShader(Camera* c, Light* lights);
+	RainbowShader(Camera* c, LightRepository* l);
 };
 

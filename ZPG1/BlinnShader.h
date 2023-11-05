@@ -6,6 +6,6 @@
 class BlinnShader : public Shader
 {
 public:
-	BlinnShader(Camera* c, Light* l);
+	BlinnShader(Camera* c, LightRepository* l);
 };
 

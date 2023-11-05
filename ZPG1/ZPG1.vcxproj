@@ -139,6 +139,7 @@
     <ClCompile Include="GiftModel.cpp" />
     <ClCompile Include="LambertShader.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightRepository.cpp" />
     <ClCompile Include="LightTestScene.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="PhongShader.cpp" />
@@ -151,12 +152,14 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="DrawableModel.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="PhongShaderMultipleLights.cpp" />
     <ClCompile Include="PlainModel.cpp" />
     <ClCompile Include="PlanetScene.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="RainbowShader.cpp" />
     <ClCompile Include="RedShader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RotationAroundObjectTransformation.cpp" />
     <ClCompile Include="RotationTransformation.cpp" />
     <ClCompile Include="ScaleTransformation.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -189,6 +192,7 @@
     <ClInclude Include="GiftModel.h" />
     <ClInclude Include="LambertShader.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightRepository.h" />
     <ClInclude Include="LightTestScene.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="PhongShader.h" />
@@ -201,6 +205,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="DrawableModel.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="PhongShaderMultipleLights.h" />
     <ClInclude Include="Plain.h" />
     <ClInclude Include="PlainModel.h" />
     <ClInclude Include="PlanetScene.h" />
@@ -208,6 +213,7 @@
     <ClInclude Include="RainbowShader.h" />
     <ClInclude Include="RedShader.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RotationAroundObjectTransformation.h" />
     <ClInclude Include="RotationTransformation.h" />
     <ClInclude Include="ScaleTransformation.h" />
     <ClInclude Include="Scene.h" />
@@ -243,6 +249,8 @@
     <None Include="LambertShader.vert" />
     <None Include="PhongShader.frag" />
     <None Include="PhongShader.vert" />
+    <None Include="PhongShaderMultipleLights.frag" />
+    <None Include="PhongShaderMultipleLights.vert" />
     <None Include="RainbowShader.frag" />
     <None Include="RainbowShader.vert" />
     <None Include="RedShader.frag" />

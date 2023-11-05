@@ -5,6 +5,9 @@ void ForestScene::initScene()
 	Camera* c = new Camera(this->window);
 	float pos = 3;
 	Light* light = new Light(glm::vec3(3, 0.0, 0.0), glm::vec4(1.0, 1.0, 0.0, 1.0));
+	LightRepository* lr = new LightRepository();
+
+	lr->addLight(light);
 
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new ScaleTransformation(1000));
@@ -13,11 +16,10 @@ void ForestScene::initScene()
 	TransformationComposite* t = new TransformationComposite(transform->getModelMatrix());
 	t->addTransformation(new RotationTransformation(0, 'x'));
 
-
 	this->drawableModels.push_back(
 		new DrawableModel(new PlainModel(),
 			new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new ConstantShader(c, light),
+			new ConstantShader(c, lr),
 			transform,
 			t
 		)
@@ -37,7 +39,7 @@ void ForestScene::initScene()
 			this->drawableModels.push_back(
 				new DrawableModel(new TreeModel(),
 					new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(0.0, 1.0, 0.0, 1.0), 16),
-					new PhongShader(c, light),
+					new PhongShader(c, lr),
 					transform2,
 					t2
 				)
@@ -59,7 +61,7 @@ void ForestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new BushModel(),
 			new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new LambertShader(c, light),
+			new LambertShader(c, lr),
 			transform3,
 			t3
 		)
@@ -79,7 +81,7 @@ void ForestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(0.0, 1.0, 1.0, 1.0), 16),
-			new PhongShader(c, light),
+			new PhongShader(c, lr),
 			transform4,
 			t4
 		)
@@ -97,7 +99,7 @@ void ForestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SuziModel(),
 			new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.0, 1.0), 16),
-			new BlinnShader(c, light),
+			new BlinnShader(c, lr),
 			transform5,
 			t5
 		)

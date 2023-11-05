@@ -1,6 +1,6 @@
 #include "RedShader.h"
 
 
-RedShader::RedShader(Camera* c, Light* light) : Shader(c, light, "RedShader.vs", "RedShader.fs")
+RedShader::RedShader(Camera* c, LightRepository* l) : Shader(c, l, "RedShader.vs", "RedShader.fs")
 {
 }

@@ -10,6 +10,11 @@ DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s,
 	this->transformations = t;
 }
 
+glm::mat4 DrawableModel::getUpdatingTransformationModelMatrix()
+{
+	return this->transformations->getModelMatrix();
+}
+
 void DrawableModel::Display() {
 	//this->initTransformations->applyTransformations();
 
@@ -23,6 +28,8 @@ void DrawableModel::Display() {
 
 	this->shader->deactivateShaderProgram();
 }
+
+
 
 void DrawableModel::DisplayDry() {
 	this->transformations->applyTransformations();

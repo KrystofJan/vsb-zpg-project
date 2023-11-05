@@ -10,11 +10,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// todo add constructor for noe modelMatrix
+
 class Transformation
 {
 public:
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 public:
+	// TODO delete virtual lol
+	// todo enum for axis
 	virtual glm::mat4 applyTransformation() = 0;
 };
 

@@ -10,11 +10,11 @@ private:
 	Shader* shader;
 	TransformationComposite* initTransformations;
 	Material* material;
+	TransformationComposite* transformations;
 
 public:
-	TransformationComposite* transformations;
 	DrawableModel(Model* mod, Material* mat, Shader* s, TransformationComposite* it, TransformationComposite* t);
+	glm::mat4 getUpdatingTransformationModelMatrix();
 	void DisplayDry();
 	void Display();
-	void UpdateTransformation(TransformationComposite* t);
 };

@@ -3,6 +3,6 @@
 class ConstantShader : public Shader
 {
 public:
-	ConstantShader(Camera* c, Light* light);
+	ConstantShader(Camera* c, LightRepository* l);
 };
 

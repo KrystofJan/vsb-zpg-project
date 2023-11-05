@@ -3,5 +3,5 @@
 class BlueShader : public Shader
 {
 public:
-	BlueShader(Camera* c, Light* light);
+	BlueShader(Camera* c, LightRepository* l);
 };

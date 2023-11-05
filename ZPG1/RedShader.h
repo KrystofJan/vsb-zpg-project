@@ -4,6 +4,6 @@
 class RedShader : public Shader
 {
 public:
-	RedShader(Camera* c, Light* light);
+	RedShader(Camera* c, LightRepository* l);
 };
 

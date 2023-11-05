@@ -3,6 +3,6 @@
 class LambertShader : public Shader
 {
 public:
-	LambertShader(Camera* c, Light* light);
+	LambertShader(Camera* c, LightRepository* l);
 };
 

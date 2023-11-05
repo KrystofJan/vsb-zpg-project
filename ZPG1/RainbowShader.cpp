@@ -1,5 +1,5 @@
 #include "RainbowShader.h"
 
-RainbowShader::RainbowShader(Camera* c, Light* light) : Shader(c, light, "RainbowShader.vert", "RainborShader.frag")
+RainbowShader::RainbowShader(Camera* c, LightRepository* l) : Shader(c, l, "RainbowShader.vert", "RainborShader.frag")
 {
 }

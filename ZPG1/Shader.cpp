@@ -1,87 +1,19 @@
 #include "Shader.h"
 #include <string.h>
-Shader::Shader(Camera* c, Light* light, const char* vertexFile, const char* fragmentFile) 
-	: ShaderProgram(vertexFile, fragmentFile){
-	this->camera = c;
-	this->camera->addObserver(this);
 
-	this->light = light;
-	this->light->addObserver(this);
-}
-
-Shader::Shader(Camera* c, std::vector<PointLight*> light, const char* vertexFile, const char* fragmentFile)
-	: ShaderProgram(vertexFile, fragmentFile) {
-	this->camera = c;
-	this->camera->addObserver(this);
-
-	for(PointLight* p : light)
-	{
-		pointLights.push_back(p);
-		p->addObserver(this);
-	}
-}
-
-Shader::Shader(Camera* c, std::vector<PointLight*> light, DirectionalLight* directionalLight, const char* vertexFile, const char* fragmentFile)
-	: ShaderProgram(vertexFile, fragmentFile) {
-	this->camera = c;
-	this->camera->addObserver(this);
-
-	for (PointLight* p : light)
-	{
-		pointLights.push_back(p);
-		p->addObserver(this);
-	}
-
-	this->directionalLight = directionalLight;
-	this->directionalLight->addObserver(this);
-	this->hasDirectLight = true;
-}
-
-Shader::Shader(Camera* c, std::vector<PointLight*> light, SpotLight* spotLight, const char* vertexFile, const char* fragmentFile)
+Shader::Shader(Camera* c, LightRepository* lr, const char* vertexFile, const char* fragmentFile)
 	: ShaderProgram(vertexFile, fragmentFile)
 {
 	this->camera = c;
 	this->camera->addObserver(this);
 
-	for (PointLight* p : light)
-	{
-		pointLights.push_back(p);
-		p->addObserver(this);
-	}
-
-	this->spotLight = spotLight;
-	this->spotLight->addObserver(this);
-	this->hasSpotLight = true;
+	this->light_repository = lr;
+	// this->light_repository->assignObservers(this);
 }
-
-Shader::Shader(Camera* c, std::vector<PointLight*> light, DirectionalLight* directionalLight, SpotLight* spotLight, const char* vertexFile, const char* fragmentFile)
-	: ShaderProgram(vertexFile, fragmentFile)
-{
-	this->camera = c;
-	this->camera->addObserver(this);
-
-	for (PointLight* p : light)
-	{
-		pointLights.push_back(p);
-		p->addObserver(this);
-	}
-
-	this->directionalLight = directionalLight;
-	this->directionalLight->addObserver(this);
-	this->hasDirectLight = true;
-
-	this->spotLight = spotLight;
-	this->spotLight->addObserver(this);
-	this->hasSpotLight = true;
-}
-
-
 
 void Shader::update()
 {
-	this->setPointLights();
-	this->setDirectionalLight();
-	this->setSpotLight();
+	this->updateLights();
 	this->updateUniformLocation("projectionMatrix", &this->camera->getProjectionMatrix()[0][0]);
 	this->updateUniformLocation("viewMatrix", &this->camera->getViewMatrix()[0][0]);
 	this->updateUniformLocation("cameraPos", this->camera->getPosition());
@@ -89,10 +21,31 @@ void Shader::update()
 	this->camera->controls();
 }
 
-void Shader::setPointLights()
+void Shader::updateLights()
 {
+	this->updateBaseLight();
+	this->updatePointLights();
+	this->updateDirectionalLight();
+	this->updateSpotLight();
+}
+
+void Shader::updateBaseLight() 
+{
+	if (this->light_repository->hasBaseLight()) 
+	{
+		Light* l = this->light_repository->getBaseLight();
+		this->updateUniformLocation("lightPos", l->getLightPos());
+		this->updateUniformLocation("light_color", l->getLightColor());
+	}
+}
+
+void Shader::updatePointLights()
+{
+	if (!this->light_repository->hasPointLights()) {
+		return;
+	}
 	int count = 0;
-	for (int i = 0; i < pointLights.size(); i++) {
+	for (int i = 0; i < this->light_repository->getPointLightsAmmout(); i++) {
 		std::string position = "pointLights[" + std::to_string(i) + "].position";
 		std::string color = "pointLights[" + std::to_string(i) + "].color";
 		std::string constant = "pointLights[" + std::to_string(i) + "].constant";
@@ -101,48 +54,49 @@ void Shader::setPointLights()
 		std::string ambient = "pointLights[" + std::to_string(i) + "].ambient";
 		std::string diffuse = "pointLights[" + std::to_string(i) + "].diffuse";
 		std::string specular = "pointLights[" + std::to_string(i) + "].specular";
-
-		this->updateUniformLocation(position, this->pointLights[i]->getLightPos());
-		this->updateUniformLocation(color, this->pointLights[i]->getLightColor());
-		this->updateUniformLocation(constant, this->pointLights[i]->getConstant());
-		this->updateUniformLocation(linear, this->pointLights[i]->getLinear());
-		this->updateUniformLocation(quadratic, this->pointLights[i]->getQuadratic());
-		this->updateUniformLocation(ambient, this->pointLights[i]->getAmbient());
-		this->updateUniformLocation(diffuse, this->pointLights[i]->getDiffuse());
-		this->updateUniformLocation(specular, this->pointLights[i]->getSpecular());
+		PointLight* pl = this->light_repository->getPointLightAt(i);
+		this->updateUniformLocation(position, pl->getLightPos());
+		this->updateUniformLocation(color, pl->getLightColor());
+		this->updateUniformLocation(constant, pl->getConstant());
+		this->updateUniformLocation(linear, pl->getLinear());
+		this->updateUniformLocation(quadratic, pl->getQuadratic());
+		this->updateUniformLocation(ambient, pl->getAmbient());
+		this->updateUniformLocation(diffuse, pl->getDiffuse());
+		this->updateUniformLocation(specular, pl->getSpecular());
 		count++;
 	}
 
 	this->updateUniformLocation("ammountOfPointLights", count);
 }
 
-void Shader::setDirectionalLight()
+void Shader::updateDirectionalLight()
 {
-	if (hasDirectLight) 
+	if (this->light_repository->hasDirectionalLight()) 
 	{
-		this->updateUniformLocation("dirLight.direction", this->directionalLight->getDirection());
-		this->updateUniformLocation("dirLight.color", this->directionalLight->getLightColor());
-		this->updateUniformLocation("dirLight.ambient", this->directionalLight->getAmbient());
-		this->updateUniformLocation("dirLight.diffuse", this->directionalLight->getDiffuse());
-		this->updateUniformLocation("dirLight.specular", this->directionalLight->getSpecular());
+		DirectionalLight* dl = this->light_repository->getDirectionalLight();
+		this->updateUniformLocation("dirLight.direction", dl->getDirection());
+		this->updateUniformLocation("dirLight.color", dl->getLightColor());
+		this->updateUniformLocation("dirLight.ambient", dl->getAmbient());
+		this->updateUniformLocation("dirLight.diffuse", dl->getDiffuse());
+		this->updateUniformLocation("dirLight.specular", dl->getSpecular());
 	}
 
 }
 
-void Shader::setSpotLight()
+void Shader::updateSpotLight()
 {
-	if (hasSpotLight) 
+	if (this->light_repository->hasSpotLight()) 
 	{
-		this->updateUniformLocation("spotLight.direction", this->spotLight->getDirection());
-		this->updateUniformLocation("spotLight.color", this->spotLight->getLightColor());
-		this->updateUniformLocation("spotLight.cutOff", this->spotLight->getCutOff());
-		this->updateUniformLocation("spotLight.outerCutOff", this->spotLight->getOuterCutOff());
-		this->updateUniformLocation("spotLight.constant", this->spotLight->getConstant());
-		this->updateUniformLocation("spotLight.linear", this->spotLight->getLinear());
-		this->updateUniformLocation("spotLight.quadratic", this->spotLight->getQuadratic());
-		this->updateUniformLocation("spotLight.ambient", this->spotLight->getAmbient());
-		this->updateUniformLocation("spotLight.diffuse", this->spotLight->getDiffuse());
-		this->updateUniformLocation("spotLight.specular", this->spotLight->getSpecular());
+		SpotLight* sl = this->light_repository->getSpotLight();
+		this->updateUniformLocation("spotLight.direction", sl->getDirection());
+		this->updateUniformLocation("spotLight.color", sl->getLightColor());
+		this->updateUniformLocation("spotLight.cutOff", sl->getCutOff());
+		this->updateUniformLocation("spotLight.outerCutOff", sl->getOuterCutOff());
+		this->updateUniformLocation("spotLight.constant", sl->getConstant());
+		this->updateUniformLocation("spotLight.linear", sl->getLinear());
+		this->updateUniformLocation("spotLight.quadratic", sl->getQuadratic());
+		this->updateUniformLocation("spotLight.ambient", sl->getAmbient());
+		this->updateUniformLocation("spotLight.diffuse", sl->getDiffuse());
+		this->updateUniformLocation("spotLight.specular", sl->getSpecular());
 	}
-
 }

@@ -10,6 +10,7 @@ public:
 	TransformationComposite();
 	TransformationComposite(glm::mat4 modelMatrix);
 	void addTransformation(Transformation* t);
+	// TODO: applyTransformations to correspond with the transformation api
 	void applyTransformations();
 	void popTransformation();
 	glm::mat4 getModelMatrix();

@@ -54,9 +54,11 @@ bool Scene::isWindowClosed() {
 void Scene::swapBuffer() {
 	glfwSwapBuffers(this->window);
 }
+
 void Scene::destroyWindow() {
 	glfwDestroyWindow(this->window);
 }
+
 void Scene::displayTransform() {
 	for (DrawableModel* m : drawableModels) {
 		m->Display();
