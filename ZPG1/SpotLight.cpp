@@ -43,3 +43,13 @@ glm::vec4 SpotLight::getDiffuse() {
 glm::vec4 SpotLight::getSpecular() {
     return this->specular;
 }
+
+void SpotLight::updateDirection(glm::vec3 direction)
+{
+    this->direction = direction;
+}
+
+void SpotLight::upgradePosition(glm::vec3 pos)
+{
+    this->lightPosition = pos;
+}

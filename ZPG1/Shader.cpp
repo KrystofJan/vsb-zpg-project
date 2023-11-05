@@ -71,6 +71,7 @@ void Shader::updatePointLights()
 
 void Shader::updateDirectionalLight()
 {
+	this->updateUniformLocation("hasDirectionalLight", this->light_repository->hasDirectionalLight());
 	if (this->light_repository->hasDirectionalLight()) 
 	{
 		DirectionalLight* dl = this->light_repository->getDirectionalLight();
@@ -85,9 +86,12 @@ void Shader::updateDirectionalLight()
 
 void Shader::updateSpotLight()
 {
+	this->updateUniformLocation("hasSpotLight", this->light_repository->hasSpotLight());
+
 	if (this->light_repository->hasSpotLight()) 
 	{
 		SpotLight* sl = this->light_repository->getSpotLight();
+		this->updateUniformLocation("spotLight.position", sl->getLightPos());
 		this->updateUniformLocation("spotLight.direction", sl->getDirection());
 		this->updateUniformLocation("spotLight.color", sl->getLightColor());
 		this->updateUniformLocation("spotLight.cutOff", sl->getCutOff());

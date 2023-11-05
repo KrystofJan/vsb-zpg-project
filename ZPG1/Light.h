@@ -10,7 +10,7 @@
 
 class Light : public Subject
 {
-private:
+protected:
 	glm::vec3 lightPosition;
 	glm::vec4 lightColor;
 

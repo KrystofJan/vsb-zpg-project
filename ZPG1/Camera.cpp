@@ -80,7 +80,9 @@ glm::vec3  Camera::getPosition()
 {
     return this->cameraPos;
 }
-
+glm::vec3 Camera::getDirection() {
+    return this->cameraFront;
+}
 glm::mat4 Camera::getProjectionMatrix()
 {
     int width, height;

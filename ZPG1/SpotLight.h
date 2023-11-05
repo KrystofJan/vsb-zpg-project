@@ -25,6 +25,7 @@ public:
     glm::vec4 getAmbient();
     glm::vec4 getDiffuse();
     glm::vec4 getSpecular();
-
+    void updateDirection(glm::vec3 direction);
+    void upgradePosition(glm::vec3 pos);
 };
 

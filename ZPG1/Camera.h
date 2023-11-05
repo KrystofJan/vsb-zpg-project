@@ -45,6 +45,7 @@ public:
 	glm::mat4 getProjectionMatrix();
 	glm::mat4 getViewMatrix(void);
 	glm::vec3 getPosition();
+	glm::vec3 getDirection();
 	void notify();
 };
 
