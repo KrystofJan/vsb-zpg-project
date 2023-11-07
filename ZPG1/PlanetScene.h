@@ -4,7 +4,12 @@ class PlanetScene : public Scene
 {
 private:
 	Camera* c;
-	Light* light;
+	BaseLight* light;
+	TransformationComposite* sunUpdatingTransform;
+	TransformationComposite* earthUpdatingTransform;
+	TransformationComposite* moonUpdateTransform;
+	DrawableModel* moon;
+	DrawableModel* earth;
 public:
 	void initScene() override;
 	void display() override;

@@ -19,7 +19,7 @@ void main(void) {
 	vec3 viewDir = normalize(cameraPos - worldPos.xyz);
 	vec3 halfwayDir = normalize(lightDir + viewDir);
 
-	float spec = pow(max(dot(worldNormal,halfwayDir ), 0.0), powExponent);
+	float spec = pow(max(dot(worldNormal,halfwayDir ), 0.0), 120);
     vec4 specular = specularStrength * spec * light_color;
 
     out_Color = vec4(0.91, 0.47, 0.65, 1.0) *  (ambient + diffuse + specular) ;

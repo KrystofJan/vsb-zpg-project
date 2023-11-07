@@ -77,7 +77,6 @@ void main(void) {
         result += CalcSpotLight(spotLight);
     }
 
-
     out_Color = objColor *  result;
 }
 

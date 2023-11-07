@@ -4,10 +4,10 @@ void SceneThree::initScene()
 {
 	Camera* c = new Camera(this->window);
 
-	Light* light = new Light(glm::vec3(-10.0, 10.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	BaseLight* light = new BaseLight(glm::vec3(-10.0, 10.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addLight(light);
+	lr->addBaseLight(light);
 
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);
@@ -18,7 +18,7 @@ void SceneThree::initScene()
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new TranslationTransformation(-1, 'y'));
 	transform->addTransformation(new ScaleTransformation(1.5));
-	transform->applyTransformations();
+	transform->applyTransformation();
 
 	TransformationComposite* t = new TransformationComposite(transform->getModelMatrix());
 	t->addTransformation(new RotationTransformation(0, 'x'));
@@ -36,7 +36,7 @@ void SceneThree::initScene()
 	object_Color = glm::vec4(0.91, 0.91, 0.12, 1.0);
 	TransformationComposite* transform2 = new TransformationComposite();
 	transform2->addTransformation(new TranslationTransformation(-1, 'y'));
-	transform2->applyTransformations();
+	transform2->applyTransformation();
 
 	TransformationComposite* tr = new TransformationComposite(transform2->getModelMatrix());
 	tr->addTransformation(new RotationTransformation(0, 'x'));
@@ -55,7 +55,7 @@ void SceneThree::initScene()
 	transform3->addTransformation(new TranslationTransformation(0.5, 'x'));
 	transform3->addTransformation(new TranslationTransformation(-1, 'y'));
 	transform3->addTransformation(new TranslationTransformation(0.5, 'z'));
-	transform3->applyTransformations();
+	transform3->applyTransformation();
 	TransformationComposite* rt = new TransformationComposite(transform3->getModelMatrix());
 	rt->addTransformation(new RotationTransformation(0 , 'x'));
 

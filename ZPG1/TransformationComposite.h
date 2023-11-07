@@ -1,17 +1,17 @@
 #pragma once
 #include "Transformation.h"
 #include <vector>
-class TransformationComposite
+class TransformationComposite : public Transformation
 {
 private:
 	std::vector<Transformation*> transformations;
 	glm::mat4 modelMatrix;
+	bool fromStart;
 public:
-	TransformationComposite();
-	TransformationComposite(glm::mat4 modelMatrix);
+	TransformationComposite(bool fromStart = false);
+	TransformationComposite(glm::mat4 modelMatrix, bool fromStart = false);
 	void addTransformation(Transformation* t);
-	// TODO: applyTransformations to correspond with the transformation api
-	void applyTransformations();
+	glm::mat4 applyTransformation() override;
 	void popTransformation();
 	glm::mat4 getModelMatrix();
 };

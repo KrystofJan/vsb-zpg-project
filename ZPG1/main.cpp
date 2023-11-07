@@ -13,10 +13,10 @@ int main(void)
 {
 	// SceneOne *s = new SceneOne();
 	// SceneTwo *s = new SceneTwo();
-	LightTestScene* s = new LightTestScene();
+	// LightTestScene* s = new LightTestScene();
 	// SceneThree *s = new SceneThree();
 	// PlanetScene *s = new PlanetScene();
-	// ForestScene* s = new ForestScene();
+	ForestScene* s = new ForestScene();
 	Renderer* r = new Renderer(s);	
 	r->Render();
 }

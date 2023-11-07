@@ -4,89 +4,78 @@ void PlanetScene::initScene()
 {
 	Camera* c = new Camera(this->window);
 	float pos = 10;
-	Light* light = new Light(glm::vec3(10, 0.0, 0.0), glm::vec4(1.0, 1.0, 0.0, 1.0));
+	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 0.5, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addLight(light);
+	lr->addBaseLight(light);
 
-	TransformationComposite* transform = new TransformationComposite();
-	transform->addTransformation(new TranslationTransformation(10, 'x'));
-	transform->applyTransformations();
+	TransformationComposite* sunInitTransform = new TransformationComposite();
+	sunInitTransform->addTransformation(new ScaleTransformation(2));
 
-	TransformationComposite* t = new TransformationComposite(transform->getModelMatrix());
-	t->addTransformation(new RotationTransformation(0, 'x'));
+	sunUpdatingTransform = new TransformationComposite(sunInitTransform->applyTransformation());
 
 	DrawableModel* sun = new DrawableModel(
 		new SphereModel(),
-		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.0, .5), 16),
+		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.5, .5), 16),
 		new ConstantShader(c, lr),
-		transform,
-		t
+		sunInitTransform,
+		sunUpdatingTransform
 	);
 
 	this->drawableModels.push_back(
 		sun
 	);
 
-	TransformationComposite* transform2 = new TransformationComposite();
-	transform2->addTransformation(new TranslationTransformation(5.0, 'x'));
-	transform2->applyTransformations();
+	TransformationComposite* earthInitTransform = new TransformationComposite();
+	earthInitTransform->addTransformation(new TranslationTransformation(-8.0, 'x'));
+	earthInitTransform->applyTransformation();
 
-	TransformationComposite* tr = new TransformationComposite(transform2->getModelMatrix());
-	tr->addTransformation(new RotationTransformation(3.0f, glm::vec3(5.0, 0, 0)));
-	
-	this->drawableModels.push_back(
-		new DrawableModel(
-			new SphereModel(),
-			new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(0.0, 1.0, 0.0, .5), 16),
-			new LambertShader(c, lr),
-			transform2,
-			tr
-		)
-	);
+	earthUpdatingTransform = new TransformationComposite(earthInitTransform->getModelMatrix());
+	earthUpdatingTransform->addTransformation(new TranslationTransformation(glm::vec3(8.0, 0, 0)));
+	earthUpdatingTransform->addTransformation(new RotationTransformation(1.5, glm::vec3(0, 1, 0)));
+	earthUpdatingTransform->addTransformation(new TranslationTransformation(glm::vec3(-8.0, 0, 0)));
 
-	TransformationComposite* transform3 = new TransformationComposite();
-	transform3->addTransformation(new TranslationTransformation(-3.0, 'x'));
-	transform3->applyTransformations();
-
-	TransformationComposite* tr3 = new TransformationComposite(transform3->getModelMatrix());
-	RotationTransformation* venusRot = new RotationTransformation(1.5f, glm::vec3(13.0, 0, 0));
-	tr3->addTransformation(venusRot);
-
-	//tr3->addTransformation(new RotationTransformation(3.0f, glm::vec3(3.0, 0.0, 0)));
-	DrawableModel* venus = new DrawableModel(
+	this->earth = new DrawableModel(
 		new SphereModel(),
-		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 0.5, 1.0, 1.0), 8),
+		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(0, 1, 0, 1.0), 8),
 		new PhongShader(c, lr),
-		transform3,
-		tr3
+		earthInitTransform,
+		earthUpdatingTransform
 	);
 
 	this->drawableModels.push_back(
-		venus
+		earth
 	);
 
-	TransformationComposite* transform4 = new TransformationComposite();
-	// transform4->addTransformation(new TranslationTransformation(0, 'x'));
-	// transform4->addTransformation(new ScaleTransformation(.5));
-	transform4->applyTransformations();
+	TransformationComposite* moonInitTransform = new TransformationComposite();
 
-	TransformationComposite* tr4 = new TransformationComposite(transform4->getModelMatrix());
-	TransformationComposite* dummy = new TransformationComposite();
-	dummy->addTransformation(new RotationTransformation(1, 'z'));
-	RotationTransformation* moonRotation = new RotationTransformation(3, glm::vec3(3.0, 0, 0), dummy);
-	
-	tr4->addTransformation(venusRot);
-	tr4->addTransformation(moonRotation);
+	TransformationComposite* moon2InitTransform = new TransformationComposite();
+	moon2InitTransform->addTransformation(new TranslationTransformation(-3.0, 'x'));
+	// moon2InitTransform->addTransformation(new ScaleTransformation(0.2));
 
-	DrawableModel* moon = new DrawableModel(
+	moon2InitTransform->applyTransformation();
+
+	TransformationComposite* moonUpdt = new TransformationComposite(moon2InitTransform->getModelMatrix());
+	// moonUpdt->addTransformation(new ScaleTransformation(0.5));
+
+	moonUpdt->addTransformation(new TranslationTransformation(glm::vec3(3.0, 0, 0)));
+	moonUpdt->addTransformation(new RotationTransformation(5, glm::vec3(0, 1, 0)));
+	moonUpdt->addTransformation(new TranslationTransformation(glm::vec3(-3.0, 0, 0)));
+
+	moonUpdateTransform = new TransformationComposite(moonInitTransform->getModelMatrix(), true);
+
+	moonUpdateTransform->addTransformation(earthUpdatingTransform);
+	moonUpdateTransform->addTransformation(moonUpdt);
+	moonUpdateTransform->addTransformation(new ScaleTransformation(0.5));
+
+	this->moon = new DrawableModel(
 		new SphereModel(),
-		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(0.5, 1.0, 1.0, 1.0), 8),
-		new ConstantShader(c, lr),
-		transform4,
-		tr4
+		new Material(glm::vec4(0.1, 0.1, 0.1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(.4, 0.4, 0.8, .5), 64),
+		new PhongShader(c, lr),
+		moonInitTransform,
+		moonUpdateTransform
 	);
-	// moonRotation->bindRotatedModel(moon);
+
 	this->drawableModels.push_back(
 		moon
 	);
@@ -98,20 +87,4 @@ void PlanetScene::display()
 		m->DisplayDry();
 	}
 	setWindowSizeBuffer();
-
-	// drawableModels.at(3)->transformations->popTransformation();
-
-	// glm::vec4 initialPlanetosition = glm::vec4(-3.0, 0, 0, 1.0f);
-	// glm::vec4 planetWorldPosition = this->drawableModels.at(2)->transformations->getModelMatrix() * initialPlanetosition;
-
-	// glm::vec3 planetPos = glm::vec3(planetWorldPosition.x, planetWorldPosition.y, planetWorldPosition.z);
-
-	// glm::vec4 initialMoonPosition = glm::vec4(-4.0, 0, 0, 1.0f);
-	// glm::vec4 moonWorldPos = this->drawableModels.at(3)->transformations->getModelMatrix() * initialMoonPosition;
-	// glm::vec3 moonPos = glm::vec3(planetWorldPosition.x, planetWorldPosition.y, planetWorldPosition.z);
-
-	// printf("%f, %f, %f\n", planetPos.x, planetPos.y, planetPos.z);
-	//drawableModels.at(3)->transformations->addTransformation(
-	//	new RotationTransformation(3.0f, planetPos)
-	//);
 }

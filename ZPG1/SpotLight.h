@@ -1,7 +1,7 @@
 #pragma once
-#include "Light.h"
+#include "BaseLight.h"
 
-class SpotLight : public Light
+class SpotLight : public BaseLight
 {
 private:
     glm::vec3 direction;

@@ -4,10 +4,10 @@ void SceneOne::initScene()
 {
 	Camera* c = new Camera(this->window);
 
-	Light* light = new Light(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addLight(light);
+	lr->addBaseLight(light);
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);
 	glm::vec4 specular_strength = glm::vec4(1.0, 1.0, 1.0, 1.0);
@@ -18,7 +18,7 @@ void SceneOne::initScene()
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new TranslationTransformation(1, 'y'));
 	transform->addTransformation(sc);
-	transform->applyTransformations();
+	transform->applyTransformation();
 
 	TransformationComposite* tr = new TransformationComposite(transform->getModelMatrix());
 	tr->addTransformation(new TranslationTransformation(0.0, 'x'));
@@ -37,7 +37,7 @@ void SceneOne::initScene()
 	TransformationComposite* transform2 = new TransformationComposite();
 	transform2->addTransformation(new TranslationTransformation(-1, 'y'));
 	transform2->addTransformation(sc);
-	transform2->applyTransformations();
+	transform2->applyTransformation();
 
 	TransformationComposite* tr2 = new TransformationComposite(transform2->getModelMatrix());
 	tr2->addTransformation(new TranslationTransformation(0.0, 'x'));
@@ -56,7 +56,7 @@ void SceneOne::initScene()
 	TransformationComposite* transform3 = new TransformationComposite();
 	transform3->addTransformation(new TranslationTransformation(1, 'x'));
 	transform3->addTransformation(sc);
-	transform3->applyTransformations();
+	transform3->applyTransformation();
 
 	TransformationComposite* tr3 = new TransformationComposite(transform3->getModelMatrix());
 	tr3->addTransformation(new TranslationTransformation(0.0, 'x'));
@@ -74,7 +74,7 @@ void SceneOne::initScene()
 	TransformationComposite* transform4 = new TransformationComposite();
 	transform4->addTransformation(new TranslationTransformation(-1, 'x'));
 	transform4->addTransformation(sc);
-	transform4->applyTransformations();
+	transform4->applyTransformation();
 
 	TransformationComposite* tr4 = new TransformationComposite(transform4->getModelMatrix());
 	tr4->addTransformation(new TranslationTransformation(0.0, 'x'));
@@ -83,7 +83,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new BlinnShader(c, lr),
 			transform4,
 			tr4
 		)

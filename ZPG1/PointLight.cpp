@@ -1,7 +1,7 @@
 #include "PointLight.h"
 
 PointLight::PointLight(glm::vec3 pos, glm::vec4 color, float constant, float linear, float quadratic, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular)
-    : Light(pos, color)
+    : BaseLight(pos, color)
 {
     this->constant = constant;
     this->linear = linear;

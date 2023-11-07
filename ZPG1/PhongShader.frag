@@ -34,7 +34,6 @@ void main(void) {
 //    if ( dot ( worldNormal , lightDir ) < 0.0) {
 
 //        specular = vec4 (0.0 , 0.0 , 0.0 , 0.0);
-
 //    }
 
     out_Color = objColor *  (ambient + diffuse + specular) ;

@@ -1,5 +1,5 @@
 #pragma once
-#include "Light.h"
+#include "BaseLight.h"
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "SpotLight.h"
@@ -7,7 +7,7 @@
 class LightRepository
 {
 private:
-	Light* light;
+	BaseLight* light;
 	std::vector<PointLight*> pointLights;
 	DirectionalLight* directionalLight;
 	SpotLight* spotLight;
@@ -16,7 +16,7 @@ private:
 	bool _hasBaseLight = false;
 	bool _hasPointLights = false;
 public:
-	void addLight(Light* l);
+	void addBaseLight(BaseLight* l);
 	void addPointLight(PointLight* pl);
 	void addDirectionalLight(DirectionalLight* dl);
 	void addSpotLight(SpotLight* sl);
@@ -27,7 +27,7 @@ public:
 	PointLight* getPointLightAt(int index);
 	SpotLight* getSpotLight();
 	DirectionalLight* getDirectionalLight();
-	Light* getBaseLight();
+	BaseLight* getBaseLight();
 	int getPointLightsAmmout();
 	// void assignObservers(Shader* s);
 };

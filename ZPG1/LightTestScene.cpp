@@ -6,11 +6,11 @@ void LightTestScene::initScene()
 
 	LightRepository* lr = new LightRepository();
 
-	Light* plainLight = new Light(	
+	BaseLight* plainLight = new BaseLight(	
 		glm::vec3(7.0, 0, 0),
 		glm::vec4(1.0, 1.0, 1.0, 1.0)
 	);
-	lr->addLight(plainLight);
+	lr->addBaseLight(plainLight);
 	DirectionalLight* dl = new DirectionalLight(
 		glm::vec3(2.0, 0, 0),
 		glm::vec4(1.0, 1.0, 1.0, 1.0),
@@ -54,7 +54,7 @@ void LightTestScene::initScene()
 	TransformationComposite* transformPlain = new TransformationComposite();
 	transformPlain->addTransformation(new TranslationTransformation(-1, 'y'));
 	transformPlain->addTransformation(new ScaleTransformation(5));
-	transformPlain->applyTransformations();
+	transformPlain->applyTransformation();
 
 	TransformationComposite* tp = new TransformationComposite(transformPlain->getModelMatrix());
 	tp->addTransformation(new RotationTransformation(0, 'x'));
@@ -71,7 +71,7 @@ void LightTestScene::initScene()
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new TranslationTransformation(0, 'x'));
 	transform->addTransformation(new ScaleTransformation(0.5));
-	transform->applyTransformations();
+	transform->applyTransformation();
 
 	TransformationComposite* t = new TransformationComposite(transform->getModelMatrix());
 	t->addTransformation(new RotationTransformation(0, 'x'));
@@ -88,7 +88,7 @@ void LightTestScene::initScene()
 	TransformationComposite* transform2 = new TransformationComposite();
 	transform2->addTransformation(new TranslationTransformation( -3.0, 'z'));
 	transform2->addTransformation(new ScaleTransformation(0.5));
-	transform2->applyTransformations();
+	transform2->applyTransformation();
 
 	TransformationComposite* t2 = new TransformationComposite(transform2->getModelMatrix());
 	t2->addTransformation(new RotationTransformation(0, 'x'));
@@ -106,7 +106,7 @@ void LightTestScene::initScene()
 	transform3->addTransformation(new TranslationTransformation( 3, 'z'));
 	transform3->addTransformation(new TranslationTransformation( -2, 'x'));
 	transform3->addTransformation(new ScaleTransformation(0.5));
-	transform3->applyTransformations();
+	transform3->applyTransformation();
 
 	TransformationComposite* t3 = new TransformationComposite(transform3->getModelMatrix());
 	t3->addTransformation(new RotationTransformation(0, 'x'));

@@ -33,7 +33,7 @@ void Shader::updateBaseLight()
 {
 	if (this->light_repository->hasBaseLight()) 
 	{
-		Light* l = this->light_repository->getBaseLight();
+		BaseLight* l = this->light_repository->getBaseLight();
 		this->updateUniformLocation("lightPos", l->getLightPos());
 		this->updateUniformLocation("light_color", l->getLightColor());
 	}
@@ -81,7 +81,6 @@ void Shader::updateDirectionalLight()
 		this->updateUniformLocation("dirLight.diffuse", dl->getDiffuse());
 		this->updateUniformLocation("dirLight.specular", dl->getSpecular());
 	}
-
 }
 
 void Shader::updateSpotLight()

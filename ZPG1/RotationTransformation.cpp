@@ -4,37 +4,24 @@
 RotationTransformation::RotationTransformation(float angle, char axis) 
 {
 	if (axis == 'x') {
-		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f)));
+		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::vec3(1.0f, 0.0f, 0.0f));
 	}
 	if (axis == 'y') {
-		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)));
+		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 	if (axis == 'z') {
-		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::normalize(glm::vec3(0.0f, 0.0f, 1.0f)));
+		this->modelMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 }
 
 RotationTransformation::RotationTransformation(float angle, glm::vec3 point) 
 {
-	glm::mat4 translationToMatrix = glm::translate(this->modelMatrix, point);
-	glm::mat4 rotationMatrix = glm::rotate(this->modelMatrix, glm::radians(angle), glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)));
-
-	glm::mat4 translationbackMatrix = glm::translate(this->modelMatrix, -point);
-
-	this->modelMatrix = translationToMatrix * rotationMatrix * translationbackMatrix;
+	this->modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle),point);
 }
 
-RotationTransformation::RotationTransformation(float angle, glm::vec3 point, TransformationComposite* prevTransformationComposite) 
+RotationTransformation::RotationTransformation(glm::mat4* matrix, float angle, glm::vec3 point)
 {
-	prevTransformationComposite->applyTransformations();
-	glm::mat4 M = prevTransformationComposite->getModelMatrix();
-
-	glm::mat4 rotationMatrix = glm::rotate(M, glm::radians(angle), glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)));
-	glm::mat4 translationToMatrix = glm::translate(M, point);
-
-	glm::mat4 translationbackMatrix = glm::translate(M, -point);
-
-	this->modelMatrix = translationToMatrix * rotationMatrix * translationbackMatrix;
+	this->modelMatrix = glm::rotate(*matrix, glm::radians(angle),point);
 }
 
 

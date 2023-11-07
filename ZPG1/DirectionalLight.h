@@ -1,6 +1,6 @@
 #pragma once
-#include "Light.h"
-class DirectionalLight : public Light
+#include "BaseLight.h"
+class DirectionalLight : public BaseLight
 {
 private:
 	glm::vec3 direction;

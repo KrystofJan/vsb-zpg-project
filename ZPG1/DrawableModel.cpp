@@ -32,7 +32,7 @@ void DrawableModel::Display() {
 
 
 void DrawableModel::DisplayDry() {
-	this->transformations->applyTransformations();
+	this->transformations->applyTransformation();
 	this->shader->activateShaderProgram();
 
 	this->shader->updateUniformLocation("modelMatrix", &this->transformations->getModelMatrix()[0][0]);

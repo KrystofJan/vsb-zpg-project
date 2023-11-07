@@ -138,7 +138,7 @@
     <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="GiftModel.cpp" />
     <ClCompile Include="LambertShader.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="BaseLight.cpp" />
     <ClCompile Include="LightRepository.cpp" />
     <ClCompile Include="LightTestScene.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -191,7 +191,7 @@
     <ClInclude Include="Gift.h" />
     <ClInclude Include="GiftModel.h" />
     <ClInclude Include="LambertShader.h" />
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="BaseLight.h" />
     <ClInclude Include="LightRepository.h" />
     <ClInclude Include="LightTestScene.h" />
     <ClInclude Include="Material.h" />
@@ -232,6 +232,7 @@
     <ClInclude Include="suziFlat.h" />
     <ClInclude Include="SuziModel.h" />
     <ClInclude Include="suziSmooth.h" />
+    <ClInclude Include="TexturedPlain.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="TransformationComposite.h" />
     <ClInclude Include="TranslationTransformation.h" />

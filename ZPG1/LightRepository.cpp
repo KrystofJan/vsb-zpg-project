@@ -1,6 +1,6 @@
 #include "LightRepository.h"
 
-void LightRepository::addLight(Light* l)
+void LightRepository::addBaseLight(BaseLight* l)
 {
 	this->light = l;
 	_hasBaseLight = true;
@@ -72,6 +72,6 @@ SpotLight* LightRepository::getSpotLight() {
 DirectionalLight* LightRepository::getDirectionalLight() {
 	return this->directionalLight;
 }
-Light* LightRepository::getBaseLight() {
+BaseLight* LightRepository::getBaseLight() {
 	return this->light;
 }

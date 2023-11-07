@@ -19,7 +19,7 @@ glm::mat4 RotationAroundObjectTransformation::applyTransformation()
 	TransformationComposite* transformComposite = new TransformationComposite();
 
 	if (this->rotatedModel == nullptr) {
-		transformComposite->applyTransformations();
+		transformComposite->applyTransformation();
 		return transformComposite->getModelMatrix();
 	}
 	glm::vec3 dist = this->getDistanceInGlobalSpace();
@@ -27,7 +27,7 @@ glm::mat4 RotationAroundObjectTransformation::applyTransformation()
 	transformComposite->addTransformation(new RotationTransformation(this->angle, relativePosition));
 	transformComposite->addTransformation(new TranslationTransformation(dist));
 	printf("x: %f, y: %f, z: %f \n", dist.x, dist.y, dist.z);
-	transformComposite->applyTransformations();
+	transformComposite->applyTransformation();
 	
 	return transformComposite->getModelMatrix();
 }

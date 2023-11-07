@@ -1,7 +1,7 @@
 #pragma once
-#include "Light.h"
+#include "BaseLight.h"
 
-class PointLight : public Light
+class PointLight : public BaseLight
 {
 private:
     float constant;

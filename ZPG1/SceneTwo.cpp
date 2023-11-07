@@ -7,15 +7,15 @@ void SceneTwo::initScene()
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new TranslationTransformation(1, 'z'));
 	transform->addTransformation(sc);
-	transform->applyTransformations();
+	transform->applyTransformation();
 
 	TransformationComposite* t = new TransformationComposite(transform->getModelMatrix());
 	t->addTransformation(new TranslationTransformation(0.0, 'z'));
 
-	Light* light = new Light(glm::vec3(0.0, 0.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addLight(light);
+	lr->addBaseLight(light);
 
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
@@ -26,4 +26,3 @@ void SceneTwo::initScene()
 		)
 	);
 }
-

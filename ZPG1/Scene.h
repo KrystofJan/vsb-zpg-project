@@ -34,7 +34,7 @@
 #include "PhongShader.h"
 #include "RainbowShader.h"
 #include "LambertShader.h"
-#include "Light.h"
+#include "BaseLight.h"
 #include "BlinnShader.h"
 #include "PlainModel.h"
 #include "TreeModel.h"

@@ -75,7 +75,7 @@
     <ClCompile Include="Observer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
+    <ClCompile Include="BaseLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShaderLoader.cpp">
@@ -242,7 +242,7 @@
     <ClInclude Include="Bushes.h">
       <Filter>Header Files\ModelDefinitions</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
+    <ClInclude Include="BaseLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneOne.h">
@@ -355,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="LightRepository.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedPlain.h">
+      <Filter>Header Files\ModelDefinitions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

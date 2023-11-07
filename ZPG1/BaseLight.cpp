@@ -1,23 +1,23 @@
-#include "Light.h"
+#include "BaseLight.h"
 
-Light::Light(glm::vec3 pos, glm::vec4 col)
+BaseLight::BaseLight(glm::vec3 pos, glm::vec4 col)
 {
 	this->lightPosition = pos;
 	this->lightColor = col;
 }
 
-glm::vec3 Light::getLightPos()
+glm::vec3 BaseLight::getLightPos()
 
 {
 	return this->lightPosition;
 }
 
-glm::vec4 Light::getLightColor()
+glm::vec4 BaseLight::getLightColor()
 {
 	return this->lightColor;
 }
 
-void Light::notify()
+void BaseLight::notify()
 {
 	for (Observer* o : this->observers) {
 		o->update();
