@@ -4,29 +4,9 @@ in vec3 worldNormal;
 out vec4 out_Color;
 #define MAX_LIGHTS 4
 
-struct PointLight {
-    vec3 position;
-    vec4 color;
-
-    float constant;
-    float linear;
-    float quadratic;
-
-    vec4 ambient;
-    vec4 diffuse;
-    vec4 specular;
-};
-
-struct DirectionalLight {
-    vec3 direction;
-    vec4 color;
-	
-    vec4 ambient;
-    vec4 diffuse;
-    vec4 specular;
-};
-
-struct SpotLight {
+struct Lights {
+    int type;
+    
     vec3 position;
     vec3 direction;
     vec4 color;
@@ -50,37 +30,54 @@ uniform vec4 diff;
 uniform vec4 specularStrength;
 uniform vec4 objColor;
 uniform float powExponent;
-uniform PointLight pointLights[MAX_LIGHTS];
-uniform DirectionalLight dirLight;
-uniform SpotLight spotLight;
-uniform bool hasDirectionalLight;
-uniform bool hasSpotLight;
-uniform int ammountOfPointLights;
+uniform Lights lights[MAX_LIGHTS];
+uniform int ammountOfLights;
 
-vec4 CalcSpotLight(SpotLight light);
-vec4 CalcPointLight(PointLight light);
-vec4 CalcDirectionalLight(DirectionalLight light);
+vec4 CalcSpotLight(Lights light);
+vec4 CalcPointLight(Lights light);
+vec4 CalcDirectionalLight(Lights light);
+vec4 CalcBaseLight(Lights l);
 
 float attenuation(float c, float l, float q, float dist);
 
 void main(void) {
     vec4 result = vec4(0.0f);
-
-    if(hasDirectionalLight)
-        result += CalcDirectionalLight(dirLight);
-    
-    for(int i = 0; i < ammountOfPointLights; i++)
-      result += CalcPointLight(pointLights[i]);
-
-    if(hasSpotLight){
-
-        result += CalcSpotLight(spotLight);
+    for(int i = 0; i < ammountOfLights; i++)
+    {
+        if (lights[i].type == 0){
+            result += CalcBaseLight(lights[i]);
+        }
+        if (lights[i].type == 1){
+            result += CalcDirectionalLight(lights[i]);
+        }
+        if (lights[i].type == 2){
+            result += CalcPointLight(lights[i]);
+        }
+        if (lights[i].type == 3){
+            result += CalcSpotLight(lights[i]);
+        }
     }
-
+        
     out_Color = objColor *  result;
 }
+vec4 CalcBaseLight(Lights l){
+    vec3 lightDir = normalize(l.position - worldPos.xyz);
+    vec4 ambient = amb * l.color;
+    float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
+    vec4 diffuse = diff * l.color * diffIntensity;
+    vec3 viewDir = normalize(cameraPos - worldPos.xyz);
+    vec3 reflectDir = reflect(-lightDir, worldNormal); 
+	float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
+    vec4 specular = specularStrength * spec * l.color;
 
-vec4 CalcPointLight(PointLight light){
+//    if ( dot ( worldNormal , lightDir ) < 0.0) {
+
+//        specular = vec4 (0.0 , 0.0 , 0.0 , 0.0);
+//    }
+
+    return (ambient + diffuse + specular) ;
+}
+vec4 CalcPointLight(Lights light){
     vec3 lightDir = normalize(light.position - worldPos.xyz);
     vec4 ambient = light.ambient  * amb * light.color;
 
@@ -107,7 +104,7 @@ vec4 CalcPointLight(PointLight light){
 }
 
 
-vec4 CalcDirectionalLight(DirectionalLight light){
+vec4 CalcDirectionalLight(Lights light){
     vec3 lightDir = normalize(-light.direction);
 
     vec4 ambient = light.ambient  * amb * light.color;
@@ -126,7 +123,7 @@ vec4 CalcDirectionalLight(DirectionalLight light){
     return (ambient + diffuse + specular);
 }
 
-vec4 CalcSpotLight(SpotLight light){
+vec4 CalcSpotLight(Lights light){
     // ambient
     vec4 ambient = light.ambient  * amb * light.color;
     

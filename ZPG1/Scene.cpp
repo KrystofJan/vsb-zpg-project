@@ -44,7 +44,6 @@ Scene::Scene() {
 	int major, minor, revision;
 	glfwGetVersion(&major, &minor, &revision);
 	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
-
 }
 
 bool Scene::isWindowClosed() {

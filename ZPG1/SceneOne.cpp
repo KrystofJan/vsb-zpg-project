@@ -7,7 +7,7 @@ void SceneOne::initScene()
 	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addBaseLight(light);
+	lr->addLight(light);
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);
 	glm::vec4 specular_strength = glm::vec4(1.0, 1.0, 1.0, 1.0);
@@ -26,7 +26,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShaderMultipleLights(c, lr),
 			transform,
 			tr
 		)
@@ -45,7 +45,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShaderMultipleLights(c, lr),
 			transform2,
 			tr2
 		)
@@ -64,12 +64,11 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShaderMultipleLights(c, lr),
 			transform3,
 			tr3
 		)
 	);
-
 
 	TransformationComposite* transform4 = new TransformationComposite();
 	transform4->addTransformation(new TranslationTransformation(-1, 'x'));

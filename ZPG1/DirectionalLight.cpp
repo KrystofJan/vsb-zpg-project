@@ -7,6 +7,7 @@ DirectionalLight::DirectionalLight(glm::vec3 pos, glm::vec4 color,glm::vec3 dire
     this->ambient = ambient;
     this->diffuse = diffuse;
     this->specular = specular;
+    this->type = 1;
 }
 
 glm::vec3 DirectionalLight::getDirection() {

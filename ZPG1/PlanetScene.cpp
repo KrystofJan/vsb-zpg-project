@@ -7,7 +7,7 @@ void PlanetScene::initScene()
 	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 0.5, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addBaseLight(light);
+	lr->addLight(light);
 
 	TransformationComposite* sunInitTransform = new TransformationComposite();
 	sunInitTransform->addTransformation(new ScaleTransformation(2));

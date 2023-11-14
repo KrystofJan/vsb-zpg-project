@@ -15,7 +15,7 @@ void SceneTwo::initScene()
 	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addBaseLight(light);
+	lr->addLight(light);
 
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),

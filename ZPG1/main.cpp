@@ -7,16 +7,18 @@
 #include "SceneThree.h"
 #include "PlanetScene.h"
 #include "ForestScene.h"
+#include "TextureTestScene.h"
 #include "LightTestScene.h"
 
 int main(void)
 {
-	// SceneOne *s = new SceneOne();
+	// SceneOne *s = new SceneOne(); // Phong
 	// SceneTwo *s = new SceneTwo();
-	// LightTestScene* s = new LightTestScene();
-	// SceneThree *s = new SceneThree();
-	// PlanetScene *s = new PlanetScene();
-	ForestScene* s = new ForestScene();
+	// LightTestScene* s = new LightTestScene(); // svetla
+	// SceneThree *s = new SceneThree(); //idk
+	// PlanetScene *s = new PlanetScene(); // planetky
+	ForestScene* s = new ForestScene(); // stromecky
+	// TextureTestScene* s = new TextureTestScene();
 	Renderer* r = new Renderer(s);	
 	r->Render();
 }

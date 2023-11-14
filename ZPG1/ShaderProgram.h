@@ -26,4 +26,5 @@ public:
 	void updateUniformLocation(std::string variable, glm::vec4 value);
 	void updateUniformLocation(std::string variable, float value);
 	void updateUniformLocation(std::string variable, int value);
+	void updateUniformLocation(std::string variable, glm::mat4 value);
 };

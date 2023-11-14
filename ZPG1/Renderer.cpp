@@ -8,8 +8,11 @@ Renderer::Renderer(Scene* scene) {
 void Renderer::Render() {
     this->scene->initScene();
     this->scene->displayTransform();
+    glClearColor(.1, .1, .1, 1);
     glEnable(GL_DEPTH_TEST);
     while (!this->scene->isWindowClosed()) {
+        
+
         // clear color and depth buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -17,6 +20,7 @@ void Renderer::Render() {
         
         glfwPollEvents();
         this->scene->swapBuffer();
+        
     }
     this->scene->destroyWindow();
     glfwTerminate();

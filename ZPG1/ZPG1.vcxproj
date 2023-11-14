@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\include;C:\Users\zahry\Documents\zpg_dependencies\glm-master\glm-master;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\include;C:\Users\zahry\Documents\zpg_dependencies\glm-master\glm-master;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\include;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\lib\Release\x64;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\lib\Release\x64;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\lib-vc2022;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,14 +127,15 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BlinnShader.cpp" />
     <ClCompile Include="BlueShader.cpp" />
     <ClCompile Include="ConstantShader.cpp" />
-    <ClCompile Include="ConstantShader.vert" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="DrawableSkyBox.cpp" />
     <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="GiftModel.cpp" />
     <ClCompile Include="LambertShader.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="LightRepository.cpp" />
     <ClCompile Include="LightTestScene.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ModelRepository.cpp" />
     <ClCompile Include="PhongShader.cpp" />
     <ClCompile Include="BushModel.cpp" />
     <ClCompile Include="CallbackController.cpp" />
@@ -170,11 +172,20 @@
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="SizeScene.cpp" />
+    <ClCompile Include="SkyBoxTextureShader.cpp" />
+    <ClCompile Include="SkyCubeModel.cpp" />
     <ClCompile Include="SphereModel.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="SquareModel.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="SuziModel.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="TextureCubeMap.cpp" />
+    <ClCompile Include="TexturedPlainModel.cpp" />
+    <ClCompile Include="TextureRepository.cpp" />
+    <ClCompile Include="TextureShader.cpp" />
+    <ClCompile Include="TextureTestScene.cpp" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="TransformationComposite.cpp" />
     <ClCompile Include="TranslationTransformation.cpp" />
@@ -187,6 +198,7 @@
     <ClInclude Include="ConstantShader.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="DrawableSkyBox.h" />
     <ClInclude Include="ForestScene.h" />
     <ClInclude Include="Gift.h" />
     <ClInclude Include="GiftModel.h" />
@@ -195,6 +207,7 @@
     <ClInclude Include="LightRepository.h" />
     <ClInclude Include="LightTestScene.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="ModelRepository.h" />
     <ClInclude Include="PhongShader.h" />
     <ClInclude Include="Bushes.h" />
     <ClInclude Include="BushModel.h" />
@@ -224,6 +237,9 @@
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="SizeScene.h" />
+    <ClInclude Include="SkyBoxTextureShader.h" />
+    <ClInclude Include="SkyCube.h" />
+    <ClInclude Include="SkyCubeModel.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereModel.h" />
     <ClInclude Include="SpotLight.h" />
@@ -232,7 +248,14 @@
     <ClInclude Include="suziFlat.h" />
     <ClInclude Include="SuziModel.h" />
     <ClInclude Include="suziSmooth.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="TextureCubeMap.h" />
     <ClInclude Include="TexturedPlain.h" />
+    <ClInclude Include="TexturedPlainModel.h" />
+    <ClInclude Include="TextureRepository.h" />
+    <ClInclude Include="TextureShader.h" />
+    <ClInclude Include="TextureTestScene.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="TransformationComposite.h" />
     <ClInclude Include="TranslationTransformation.h" />
@@ -246,6 +269,7 @@
     <None Include="BlueShader.frag" />
     <None Include="BlueShader.vert" />
     <None Include="ConstantShader.frag" />
+    <None Include="ConstantShader.vert" />
     <None Include="LambertShader.frag" />
     <None Include="LambertShader.vert" />
     <None Include="PhongShader.frag" />
@@ -256,6 +280,10 @@
     <None Include="RainbowShader.vert" />
     <None Include="RedShader.frag" />
     <None Include="RedShader.vert" />
+    <None Include="SkyBoxTextureShader.frag" />
+    <None Include="SkyBoxTextureShader.vert" />
+    <None Include="TextureShader.frag" />
+    <None Include="TextureShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

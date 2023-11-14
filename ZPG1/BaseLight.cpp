@@ -4,6 +4,7 @@ BaseLight::BaseLight(glm::vec3 pos, glm::vec4 col)
 {
 	this->lightPosition = pos;
 	this->lightColor = col;
+	this->type = 0;
 }
 
 glm::vec3 BaseLight::getLightPos()
@@ -15,6 +16,11 @@ glm::vec3 BaseLight::getLightPos()
 glm::vec4 BaseLight::getLightColor()
 {
 	return this->lightColor;
+}
+
+int BaseLight::getType()
+{
+	return this->type;
 }
 
 void BaseLight::notify()

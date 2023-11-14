@@ -44,15 +44,21 @@
 #include "DirectionalLight.h"
 #include "SpotLight.h"
 #include "PhongShaderMultipleLights.h"
+#include "TexturedPlainModel.h"
+#include "TextureShader.h"
+#include "SkyCubeModel.h"
+#include "SkyBoxTextureShader.h"
+#include "TextureRepository.h"
+#include "Texture2D.h"
+#include "TextureCubeMap.h"
+#include "DrawableSkyBox.h"
 
 class Scene
 {
 protected:
 	std::vector<DrawableModel*> drawableModels;
-
-	// TODO change
-public:
 	GLFWwindow* window;
+public:
 	Scene();
 	virtual void initScene() = 0;
 	bool isWindowClosed();

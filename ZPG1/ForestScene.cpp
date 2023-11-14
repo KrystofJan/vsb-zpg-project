@@ -3,13 +3,28 @@
 #include <random>
 void ForestScene::initScene()
 {
-	Camera* c = new Camera(this->window);
+	c = new Camera(this->window);
 	float pos = 3;
-	BaseLight* light = new BaseLight(glm::vec3(3, 10.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	BaseLight* light = new BaseLight(glm::vec3(3, 10.0, 0.0), glm::vec4(0.3137, 0.4078, 0.5255, 1.0));
 	LightRepository* lr = new LightRepository();
-	std::uniform_real_distribution<float> distribution(0.0, 0.5);
 
-	 lr->addBaseLight(light);
+	 lr->addLight(light);
+
+	 this->flashlight = new SpotLight(
+		 c->getPosition(),
+		 glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		 c->getDirection(),
+		 glm::cos(glm::radians(12.5f)),
+		 glm::cos(glm::radians(15.0f)),
+		 0.4f,
+		 0.4f,
+		 0.1f,
+		 glm::vec4(0.1, 0.1, 0.1, 1.0),
+		 glm::vec4(0.385, 0.647, 0.812, 1.0),
+		 glm::vec4(1.0, 1.0, 1.0, 1.0)
+	 );
+	 lr->addLight(flashlight);
+
 	//DirectionalLight* dl = new DirectionalLight(
 	//	glm::vec3(2.0, 0, 0),
 	//	glm::vec4(1.0, 1.0, 1.0, 1.0),
@@ -20,6 +35,31 @@ void ForestScene::initScene()
 	//	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	//);
 	//lr->addDirectionalLight(dl);
+
+	 TextureRepository* tex = new TextureRepository();
+
+
+	 tex->addTexture(new TextureCubeMap(
+		 "textures/cubemap/posx.jpg", "textures/cubemap/negx.jpg",
+		 "textures/cubemap/posy.jpg", "textures/cubemap/negy.jpg",
+		 "textures/cubemap/posz.jpg", "textures/cubemap/negz.jpg"
+	 ));
+
+	 TransformationComposite* skyBoxTi = new TransformationComposite();
+	 skyBoxTi->applyTransformation();
+	 TransformationComposite* skyBoxTu = new TransformationComposite(skyBoxTi->getModelMatrix(), true);
+	 DrawableSkyBox* skybox = new DrawableSkyBox(
+		 new SkyCubeModel(),
+		 new Material(glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1, 1, 1, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.0, 1.0), 16),
+		 tex->getTextureAt(0),
+		 new SkyBoxTextureShader(c, lr),
+		 skyBoxTi,
+		 skyBoxTu
+	 );
+
+	 this->drawableModels.push_back(
+		 skybox
+	 );
 
 	//sun
 	TransformationComposite* sun_trans = new TransformationComposite();
@@ -44,16 +84,18 @@ void ForestScene::initScene()
 			updating_sun_trans
 		)
 	);
+
 	//plain
 	TransformationComposite* plain_trans = new TransformationComposite();
 	plain_trans->addTransformation(new ScaleTransformation(50));
 	plain_trans->applyTransformation();
 	TransformationComposite* updating_plain_trans = new TransformationComposite(plain_trans->getModelMatrix());
 
-
+	TextureRepository* tr = new TextureRepository();
+	tr->addTexture(new Texture2D("textures/cubemap/negy.jpg"));
 	this->drawableModels.push_back(
 		new DrawableModel(
-			new PlainModel(),
+			new TexturedPlainModel(),
 			new Material(
 				glm::vec4(0.1, 0.1, 0.1, 1.0),	// ambient
 				glm::vec4(0.385, 0.647, 0.812, 1.0),  // diffuse
@@ -61,7 +103,8 @@ void ForestScene::initScene()
 				glm::vec4(0.1, 0.5, 0.3, 1.0), // color
 				64 // specIntensity
 			),
-			new LambertShader(c, lr),
+			tr->getTextureAt(0),
+			new TextureShader(c, lr),
 			plain_trans,
 			updating_plain_trans
 		)
@@ -93,7 +136,7 @@ void ForestScene::initScene()
 						glm::vec4(0.1, 0.7, 0.3, 1.0), // color
 						8 // specIntensity
 					),
-					new PhongShader(c, lr),
+					new PhongShaderMultipleLights(c, lr),
 					tree_trans,
 					updating_tree_trans
 				)
@@ -126,7 +169,7 @@ void ForestScene::initScene()
 						glm::vec4(0.2, 1.0, 0.4, 1.0), // color
 						8 // specIntensity
 					),
-					new PhongShader(c, lr),
+					new PhongShaderMultipleLights(c, lr),
 					bush_trans,
 					updating_bush_trans
 				)
@@ -152,9 +195,18 @@ void ForestScene::initScene()
 				glm::vec4(0.1, 0.5, 0.3, 1.0), // color
 				64 // specIntensity
 			),
-			new BlinnShader(c, lr),
+			new PhongShaderMultipleLights(c, lr),
 			suzi_trans,
 			updating_suzi_trans
 		)
 	);
+}
+
+void ForestScene::display() {
+	this->flashlight->updateDirection(c->getDirection());
+	this->flashlight->upgradePosition(c->getPosition());
+	for (DrawableModel* m : drawableModels) {
+		m->DisplayDry();
+	}
+	setWindowSizeBuffer();
 }

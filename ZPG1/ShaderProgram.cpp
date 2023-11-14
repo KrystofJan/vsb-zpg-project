@@ -24,6 +24,15 @@ void ShaderProgram::updateUniformLocation(std::string variable, const GLfloat* v
 	}
 }
 
+void ShaderProgram::updateUniformLocation(std::string variable, glm::mat4 value)
+{
+	GLint id = glGetUniformLocation(this->shaderProgramID, variable.c_str());
+
+	if (id >= 0) {
+		glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(value));
+	}
+}
+
 void ShaderProgram::updateUniformLocation(std::string variable, glm::vec3 value)
 {
 	GLint id = glGetUniformLocation(this->shaderProgramID, variable.c_str());

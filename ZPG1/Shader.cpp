@@ -13,7 +13,7 @@ Shader::Shader(Camera* c, LightRepository* lr, const char* vertexFile, const cha
 
 void Shader::update()
 {
-	this->updateLights();
+
 	this->updateUniformLocation("projectionMatrix", &this->camera->getProjectionMatrix()[0][0]);
 	this->updateUniformLocation("viewMatrix", &this->camera->getViewMatrix()[0][0]);
 	this->updateUniformLocation("cameraPos", this->camera->getPosition());
@@ -23,6 +23,8 @@ void Shader::update()
 
 void Shader::updateLights()
 {
+	this->updateUniformLocation("ammountOfLights", this->light_repository->getLightVecSize());
+
 	this->updateBaseLight();
 	this->updatePointLights();
 	this->updateDirectionalLight();
@@ -31,75 +33,112 @@ void Shader::updateLights()
 
 void Shader::updateBaseLight() 
 {
-	if (this->light_repository->hasBaseLight()) 
-	{
-		BaseLight* l = this->light_repository->getBaseLight();
-		this->updateUniformLocation("lightPos", l->getLightPos());
-		this->updateUniformLocation("light_color", l->getLightColor());
+	for (int i = 0; i < this->light_repository->getLightVecSize(); i++) {
+		if (this->light_repository->LightAt(i)->getType() == 0) {
+			BaseLight* l = light_repository->LightAt(i);
+
+			std::string position = "lights[" + std::to_string(i) + "].position";
+			std::string color = "lights[" + std::to_string(i) + "].color";
+			std::string type = "lights[" + std::to_string(i) + "].type";
+			this->updateUniformLocation(type, 0);
+			this->updateUniformLocation(position, l->getLightPos());
+			this->updateUniformLocation(color, l->getLightColor());
+			this->updateUniformLocation("lightPos", l->getLightPos());
+			this->updateUniformLocation("light_color", l->getLightColor());
+
+		}
 	}
 }
 
 void Shader::updatePointLights()
 {
-	if (!this->light_repository->hasPointLights()) {
-		return;
-	}
-	int count = 0;
-	for (int i = 0; i < this->light_repository->getPointLightsAmmout(); i++) {
-		std::string position = "pointLights[" + std::to_string(i) + "].position";
-		std::string color = "pointLights[" + std::to_string(i) + "].color";
-		std::string constant = "pointLights[" + std::to_string(i) + "].constant";
-		std::string linear = "pointLights[" + std::to_string(i) + "].linear";
-		std::string quadratic = "pointLights[" + std::to_string(i) + "].quadratic";
-		std::string ambient = "pointLights[" + std::to_string(i) + "].ambient";
-		std::string diffuse = "pointLights[" + std::to_string(i) + "].diffuse";
-		std::string specular = "pointLights[" + std::to_string(i) + "].specular";
-		PointLight* pl = this->light_repository->getPointLightAt(i);
-		this->updateUniformLocation(position, pl->getLightPos());
-		this->updateUniformLocation(color, pl->getLightColor());
-		this->updateUniformLocation(constant, pl->getConstant());
-		this->updateUniformLocation(linear, pl->getLinear());
-		this->updateUniformLocation(quadratic, pl->getQuadratic());
-		this->updateUniformLocation(ambient, pl->getAmbient());
-		this->updateUniformLocation(diffuse, pl->getDiffuse());
-		this->updateUniformLocation(specular, pl->getSpecular());
-		count++;
-	}
+	for (int i = 0; i < this->light_repository->getLightVecSize(); i++) {
+		if (this->light_repository->LightAt(i)->getType() == 2) 
+		{
+			BaseLight* bl = dynamic_cast<BaseLight*>(light_repository->LightAt(i));
+			PointLight* pl = dynamic_cast<PointLight*>(bl);
 
-	this->updateUniformLocation("ammountOfPointLights", count);
+			std::string position = "lights[" + std::to_string(i) + "].position";
+			std::string color = "lights[" + std::to_string(i) + "].color";
+			std::string constant = "lights[" + std::to_string(i) + "].constant";
+			std::string linear = "lights[" + std::to_string(i) + "].linear";
+			std::string quadratic = "lights[" + std::to_string(i) + "].quadratic";
+			std::string ambient = "lights[" + std::to_string(i) + "].ambient";
+			std::string diffuse = "lights[" + std::to_string(i) + "].diffuse";
+			std::string specular = "lights[" + std::to_string(i) + "].specular";
+			std::string type = "lights[" + std::to_string(i) + "].type";
+			this->updateUniformLocation(type, 2);
+
+			this->updateUniformLocation(position, pl->getLightPos());
+			this->updateUniformLocation(color, pl->getLightColor());
+			this->updateUniformLocation(constant, pl->getConstant());
+			this->updateUniformLocation(linear, pl->getLinear());
+			this->updateUniformLocation(quadratic, pl->getQuadratic());
+			this->updateUniformLocation(ambient, pl->getAmbient());
+			this->updateUniformLocation(diffuse, pl->getDiffuse());
+			this->updateUniformLocation(specular, pl->getSpecular());
+		}
+	}
 }
 
 void Shader::updateDirectionalLight()
 {
-	this->updateUniformLocation("hasDirectionalLight", this->light_repository->hasDirectionalLight());
-	if (this->light_repository->hasDirectionalLight()) 
-	{
-		DirectionalLight* dl = this->light_repository->getDirectionalLight();
-		this->updateUniformLocation("dirLight.direction", dl->getDirection());
-		this->updateUniformLocation("dirLight.color", dl->getLightColor());
-		this->updateUniformLocation("dirLight.ambient", dl->getAmbient());
-		this->updateUniformLocation("dirLight.diffuse", dl->getDiffuse());
-		this->updateUniformLocation("dirLight.specular", dl->getSpecular());
+	for (int i = 0; i < this->light_repository->getLightVecSize(); i++) {
+		if (light_repository->LightAt(i)->getType() == 1) {
+			BaseLight* bl = dynamic_cast<BaseLight*>(light_repository->LightAt(i));
+			DirectionalLight* dl = dynamic_cast<DirectionalLight *>(bl);
+
+			std::string color = "lights[" + std::to_string(i) + "].color";
+			std::string dir = "lights[" + std::to_string(i) + "].direction";
+			std::string ambient = "lights[" + std::to_string(i) + "].ambisent";
+			std::string diffuse = "lights[" + std::to_string(i) + "].diffuse";
+			std::string specular = "lights[" + std::to_string(i) + "].specular";
+			std::string type = "lights[" + std::to_string(i) + "].type";
+			this->updateUniformLocation(type, 1);
+
+			this->updateUniformLocation(dir, dl->getDirection());
+			this->updateUniformLocation(color, dl->getLightColor());
+			this->updateUniformLocation(ambient, dl->getAmbient());
+			this->updateUniformLocation(diffuse, dl->getDiffuse());
+			this->updateUniformLocation(specular, dl->getSpecular());
+		}
 	}
 }
 
 void Shader::updateSpotLight()
 {
-	this->updateUniformLocation("hasSpotLight", this->light_repository->hasSpotLight());
+	
+	for (int i = 0; i < this->light_repository->getLightVecSize(); i++) {
+		if (this->light_repository->LightAt(i)->getType() == 3) {
+			BaseLight* bl = dynamic_cast<BaseLight*>(light_repository->LightAt(i));
+			SpotLight* sl = dynamic_cast<SpotLight*>(bl);
 
-	if (this->light_repository->hasSpotLight()) 
-	{
-		SpotLight* sl = this->light_repository->getSpotLight();
-		this->updateUniformLocation("spotLight.position", sl->getLightPos());
-		this->updateUniformLocation("spotLight.direction", sl->getDirection());
-		this->updateUniformLocation("spotLight.color", sl->getLightColor());
-		this->updateUniformLocation("spotLight.cutOff", sl->getCutOff());
-		this->updateUniformLocation("spotLight.outerCutOff", sl->getOuterCutOff());
-		this->updateUniformLocation("spotLight.constant", sl->getConstant());
-		this->updateUniformLocation("spotLight.linear", sl->getLinear());
-		this->updateUniformLocation("spotLight.quadratic", sl->getQuadratic());
-		this->updateUniformLocation("spotLight.ambient", sl->getAmbient());
-		this->updateUniformLocation("spotLight.diffuse", sl->getDiffuse());
-		this->updateUniformLocation("spotLight.specular", sl->getSpecular());
+			std::string position = "lights[" + std::to_string(i) + "].position";
+			std::string color = "lights[" + std::to_string(i) + "].color";
+			std::string dir = "lights[" + std::to_string(i) + "].direction";
+			std::string cu = "lights[" + std::to_string(i) + "].cutOff";
+			std::string ocu = "lights[" + std::to_string(i) + "].outerCutOff";
+			std::string constant = "lights[" + std::to_string(i) + "].constant";
+			std::string linear = "lights[" + std::to_string(i) + "].linear";
+			std::string quadratic = "lights[" + std::to_string(i) + "].quadratic";
+			std::string ambient = "lights[" + std::to_string(i) + "].ambisent";
+			std::string diffuse = "lights[" + std::to_string(i) + "].diffuse";
+			std::string specular = "lights[" + std::to_string(i) + "].specular";
+
+			std::string type = "lights[" + std::to_string(i) + "].type";
+			this->updateUniformLocation(type, 3);
+
+			this->updateUniformLocation(position, sl->getLightPos());
+			this->updateUniformLocation(dir, sl->getDirection());
+			this->updateUniformLocation(color, sl->getLightColor());
+			this->updateUniformLocation(cu, sl->getCutOff());
+			this->updateUniformLocation(ocu, sl->getOuterCutOff());
+			this->updateUniformLocation(constant, sl->getConstant());
+			this->updateUniformLocation(linear, sl->getLinear());
+			this->updateUniformLocation(quadratic, sl->getQuadratic());
+			this->updateUniformLocation(ambient, sl->getAmbient());
+			this->updateUniformLocation(diffuse, sl->getDiffuse());
+			this->updateUniformLocation(specular, sl->getSpecular());
+		}
 	}
 }

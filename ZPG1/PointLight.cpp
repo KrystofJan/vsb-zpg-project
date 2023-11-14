@@ -9,6 +9,7 @@ PointLight::PointLight(glm::vec3 pos, glm::vec4 color, float constant, float lin
     this->ambient = ambient;
     this->diffuse = diffuse;
     this->specular = specular;
+    this->type = 2;
 }
 
 float PointLight::getConstant() {

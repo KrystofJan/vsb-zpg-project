@@ -6,4 +6,3 @@ class RedShader : public Shader
 public:
 	RedShader(Camera* c, LightRepository* l);
 };
-

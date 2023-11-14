@@ -12,6 +12,7 @@ SpotLight::SpotLight(glm::vec3 pos, glm::vec4 color, glm::vec3 dir, float cutOff
     this->ambient = ambient;
     this->diffuse = diffuse;
     this->specular = specular;
+    this->type = 3;
 }
 
 glm::vec3 SpotLight::getDirection() {

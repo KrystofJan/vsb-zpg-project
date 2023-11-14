@@ -6,44 +6,44 @@ void LightTestScene::initScene()
 
 	LightRepository* lr = new LightRepository();
 
-	BaseLight* plainLight = new BaseLight(	
-		glm::vec3(7.0, 0, 0),
-		glm::vec4(1.0, 1.0, 1.0, 1.0)
-	);
-	lr->addBaseLight(plainLight);
+	//BaseLight* plainLight = new BaseLight(	
+	//	glm::vec3(7.0, 0, 0),
+	//	glm::vec4(1.0, 1.0, 1.0, 1.0)
+	//);
+	// lr->addLight(plainLight);
 	DirectionalLight* dl = new DirectionalLight(
-		glm::vec3(2.0, 0, 0),
-		glm::vec4(1.0, 1.0, 1.0, 1.0),
+		glm::vec3(2.0f, .0f, .0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 
 		glm::vec3(-0.2f, -1.0f, -0.3f),
 		glm::vec4(0.05f, 0.05f, 0.05f, 1.0f),
 		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
-	//lr->addDirectionalLight(dl);
+	lr->addLight(dl);
 	this->flashlight = new SpotLight(
 		c->getPosition(),
-		glm::vec4(1.0, 1.0, 1.0, 1.0),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		c->getDirection(),
 		glm::cos(glm::radians(12.5f)),
 		glm::cos(glm::radians(15.0f)),
-		0.4,
-		0.4,
-		0.1,
+		0.4f,
+		0.4f,
+		0.1f,
 		glm::vec4(0.1, 0.1, 0.1, 1.0),
 		glm::vec4(0.385, 0.647, 0.812, 1.0),
 		glm::vec4(1.0, 1.0, 1.0, 1.0)
 	);
-	lr->addSpotLight(flashlight);
+	lr->addLight(flashlight);
 
 
-	lr->addPointLight(
+	lr->addLight(
 		new PointLight(
 			glm::vec3(2.0, 0, 0),
 			glm::vec4(1.0, 1.0, 1.0, 1.0),
-			0.4,
-			0.4,
-			0.1,
+			0.4f,
+			0.4f,
+			0.1f,
 			glm::vec4(0.05f, 0.05f, 0.05f, 1.0f),
 			glm::vec4(0.8f, 0.8f, 0.8f, 1.0f),
 			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)

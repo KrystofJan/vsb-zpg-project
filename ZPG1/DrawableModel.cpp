@@ -1,7 +1,17 @@
 #include "DrawableModel.h"
 
-DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s,
+DrawableModel::DrawableModel(Model* mod, Material* mat, Texture* te, Shader* s,
 	TransformationComposite* it, TransformationComposite* t) 
+{
+	this->model = mod;
+	this->material = mat;
+	this->shader = s;
+	this->initTransformations = it;
+	this->transformations = t;
+	this->texture = te;
+}
+
+DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s, TransformationComposite* it, TransformationComposite* t)
 {
 	this->model = mod;
 	this->material = mat;
@@ -10,6 +20,7 @@ DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s,
 	this->transformations = t;
 }
 
+
 glm::mat4 DrawableModel::getUpdatingTransformationModelMatrix()
 {
 	return this->transformations->getModelMatrix();
@@ -17,10 +28,12 @@ glm::mat4 DrawableModel::getUpdatingTransformationModelMatrix()
 
 void DrawableModel::Display() {
 	//this->initTransformations->applyTransformations();
+	this->shader->activateShaderProgram();
 
 	this->shader->updateUniformLocation("modelMatrix", &this->initTransformations->getModelMatrix()[0][0]);
-	this->shader->activateShaderProgram();
 	
+	// this->shader->updateUniformLocation("textureUnitID", 0);
+
 	this->shader->update();
 
 	this->model->BindModel();
@@ -35,12 +48,18 @@ void DrawableModel::DisplayDry() {
 	this->transformations->applyTransformation();
 	this->shader->activateShaderProgram();
 
+	this->shader->updateLights();
+	if (texture != nullptr) {
+		this->shader->updateUniformLocation("textureUnitID", this->texture->getPosition());
+	}
 	this->shader->updateUniformLocation("modelMatrix", &this->transformations->getModelMatrix()[0][0]);
+
 	this->shader->updateUniformLocation("amb", material->getAmbient());
 	this->shader->updateUniformLocation("diff", this->material->getDiffuse());
 	this->shader->updateUniformLocation("objColor", this->material->getObjColor());
 	this->shader->updateUniformLocation("powExponent", this->material->getSpecIntensity());
 	this->shader->updateUniformLocation("specularStrength", this->material->getSpecularStrength());
+
 	this->shader->update();
 
 	this->model->BindModel();

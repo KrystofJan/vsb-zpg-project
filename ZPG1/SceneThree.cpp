@@ -7,7 +7,7 @@ void SceneThree::initScene()
 	BaseLight* light = new BaseLight(glm::vec3(-10.0, 10.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	lr->addBaseLight(light);
+	lr->addLight(light);
 
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);

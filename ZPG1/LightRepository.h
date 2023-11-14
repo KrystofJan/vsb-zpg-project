@@ -7,28 +7,12 @@
 class LightRepository
 {
 private:
-	BaseLight* light;
-	std::vector<PointLight*> pointLights;
-	DirectionalLight* directionalLight;
-	SpotLight* spotLight;
-	bool _hasDirectLight = false;
-	bool _hasSpotLight = false;
-	bool _hasBaseLight = false;
-	bool _hasPointLights = false;
+	std::vector<BaseLight*> lights;
 public:
-	void addBaseLight(BaseLight* l);
-	void addPointLight(PointLight* pl);
-	void addDirectionalLight(DirectionalLight* dl);
-	void addSpotLight(SpotLight* sl);
-	bool hasPointLights();
-	bool hasDirectionalLight();
-	bool hasSpotLight();
-	bool hasBaseLight();
-	PointLight* getPointLightAt(int index);
-	SpotLight* getSpotLight();
-	DirectionalLight* getDirectionalLight();
-	BaseLight* getBaseLight();
-	int getPointLightsAmmout();
+
+	void addLight(BaseLight* l);
+	BaseLight* LightAt(int i);
+	int getLightVecSize();
 	// void assignObservers(Shader* s);
 };
 
