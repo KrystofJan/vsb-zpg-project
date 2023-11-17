@@ -24,6 +24,10 @@ private:
 
 	bool firstMouse = true;
 
+	float dampeningFactor = 0.1f;
+
+	float sensitivity = 0.1f;
+
 	GLFWwindow* window;
 	
 	glm::vec3 direction;
@@ -39,7 +43,7 @@ private:
 	glm::mat4 viewMatrix;
 public:
 	Camera(GLFWwindow* window);
-	void call_cursor(float x, float y);
+	void call_cursor(double x, double y);
 	void controls(void);
 	glm::mat4 getProjectionMatrix();
 	glm::mat4 getViewMatrix(void);

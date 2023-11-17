@@ -13,6 +13,7 @@ Shader::Shader(Camera* c, LightRepository* lr, const char* vertexFile, const cha
 
 void Shader::update()
 {
+	this->updateLights();
 
 	this->updateUniformLocation("projectionMatrix", &this->camera->getProjectionMatrix()[0][0]);
 	this->updateUniformLocation("viewMatrix", &this->camera->getViewMatrix()[0][0]);

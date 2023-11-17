@@ -93,7 +93,6 @@ void TextureTestScene::initScene()
 	
 }
 
-
 void TextureTestScene::display() {
 	for (DrawableModel* m : drawableModels) {
 		m->DisplayDry();

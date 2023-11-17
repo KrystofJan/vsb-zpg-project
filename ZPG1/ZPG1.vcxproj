@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\include;C:\Users\zahry\Documents\zpg_dependencies\glm-master\glm-master;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\include;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\include;C:\Users\zahry\Documents\zpg_dependencies\glm-master\glm-master;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\include;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\include;C:\Users\zahry\Documents\zpg_dependencies\assimp_base\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\lib\Release\x64;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\lib-vc2022;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\assimp_base\lib\Debug;C:\Users\zahry\Documents\zpg_dependencies\glew-2.1.0\lib\Release\x64;C:\Users\zahry\Documents\zpg_dependencies\glfw-3.3.8.bin.WIN64\lib-vc2022;C:\Users\zahry\Documents\zpg_dependencies\SOIL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3.lib;glew32.lib;soil2-debug.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,13 +121,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\zahry\Documents\zpg_dependencies\assimp_base\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>soil2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>soil2.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\zahry\Documents\zpg_dependencies\assimp_base\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -138,12 +140,15 @@
     <ClCompile Include="DrawableSkyBox.cpp" />
     <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="GiftModel.cpp" />
+    <ClCompile Include="HouseModel.cpp" />
     <ClCompile Include="LambertShader.cpp" />
     <ClCompile Include="BaseLight.cpp" />
     <ClCompile Include="LightRepository.cpp" />
     <ClCompile Include="LightTestScene.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ModelLoadingScene.cpp" />
     <ClCompile Include="ModelRepository.cpp" />
+    <ClCompile Include="PhongMultipleLightsTextured.cpp" />
     <ClCompile Include="PhongShader.cpp" />
     <ClCompile Include="BushModel.cpp" />
     <ClCompile Include="CallbackController.cpp" />
@@ -191,6 +196,7 @@
     <ClCompile Include="TranslationTransformation.cpp" />
     <ClCompile Include="TreeModel.cpp" />
     <ClCompile Include="TriangleModel.cpp" />
+    <ClCompile Include="ZombieModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlinnShader.h" />
@@ -202,12 +208,15 @@
     <ClInclude Include="ForestScene.h" />
     <ClInclude Include="Gift.h" />
     <ClInclude Include="GiftModel.h" />
+    <ClInclude Include="HouseModel.h" />
     <ClInclude Include="LambertShader.h" />
     <ClInclude Include="BaseLight.h" />
     <ClInclude Include="LightRepository.h" />
     <ClInclude Include="LightTestScene.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="ModelLoadingScene.h" />
     <ClInclude Include="ModelRepository.h" />
+    <ClInclude Include="PhongMultipleLightsTextured.h" />
     <ClInclude Include="PhongShader.h" />
     <ClInclude Include="Bushes.h" />
     <ClInclude Include="BushModel.h" />
@@ -262,6 +271,7 @@
     <ClInclude Include="Tree.h" />
     <ClInclude Include="TreeModel.h" />
     <ClInclude Include="TriangleModel.h" />
+    <ClInclude Include="ZombieModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BlinnShader.frag" />
@@ -272,6 +282,8 @@
     <None Include="ConstantShader.vert" />
     <None Include="LambertShader.frag" />
     <None Include="LambertShader.vert" />
+    <None Include="PhongMultipleLightsTextured.frag" />
+    <None Include="PhongMultipleLightsTextured.vert" />
     <None Include="PhongShader.frag" />
     <None Include="PhongShader.vert" />
     <None Include="PhongShaderMultipleLights.frag" />

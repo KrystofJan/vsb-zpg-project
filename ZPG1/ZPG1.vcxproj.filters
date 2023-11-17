@@ -216,6 +216,18 @@
     <ClCompile Include="DrawableSkyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PhongMultipleLightsTextured.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoadingScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZombieModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -425,6 +437,18 @@
     <ClInclude Include="DrawableSkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhongMultipleLightsTextured.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoadingScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZombieModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="RedShader.vert">
@@ -477,5 +501,7 @@
     <None Include="SkyBoxTextureShader.vert" />
     <None Include="TextureShader.frag" />
     <None Include="TextureShader.vert" />
+    <None Include="PhongMultipleLightsTextured.vert" />
+    <None Include="PhongMultipleLightsTextured.frag" />
   </ItemGroup>
 </Project>

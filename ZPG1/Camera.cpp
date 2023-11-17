@@ -11,7 +11,7 @@ void Camera::notify() {
     }
 }
 
-void Camera::call_cursor(float x, float y) {
+void Camera::call_cursor(double x, double y) {
 
     if (firstMouse) // initially set to true
     {
@@ -19,13 +19,13 @@ void Camera::call_cursor(float x, float y) {
         lastY = y;
         firstMouse = false;
     }
-    float xoffset = x - lastX;
-    float yoffset = lastY - y;
+    double xoffset = x - lastX;
+    double yoffset = lastY - y;
+
     lastX = x;
     lastY = y;
 
-    float sensitivity = 0.1f;
-    xoffset *= sensitivity;
+    xoffset *= sensitivity; // sensitivity set to 0.1
     yoffset *= sensitivity;
 
     yaw += xoffset;
@@ -63,16 +63,18 @@ void Camera::controls() {
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
     {
-        double posX, posY;
-        glfwGetCursorPos(this->window, &posX, &posY);
-        float x = static_cast<float>(posX);
-        float y = static_cast<float>(posY);
+        double x, y;
+        glfwGetCursorPos(this->window, &x, &y);
         this->call_cursor(x, y);
 
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
     {
         this->firstMouse = true;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+        cameraSpeed = static_cast<float>(2.5 * deltaTime) * 4;
     }
 }
 
@@ -93,6 +95,6 @@ glm::mat4 Camera::getProjectionMatrix()
     int width, height;
     glfwGetWindowSize(window, &width, &height);
 
-    this->projectionMatrix = glm::perspective(glm::radians(90.0f), (float)width / (float)height, 0.1f, 100.0f);
+    this->projectionMatrix = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 100.0f);
     return this->projectionMatrix;
 }

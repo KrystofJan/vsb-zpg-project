@@ -12,7 +12,9 @@ uniform vec4 specularStrength;
 uniform float powExponent;
 void main(void) {
     vec3 lightDir = normalize(lightPos - worldPos.xyz);
+
     vec4 ambient = amb * light_color;
+
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
     vec4 diffuse = diff * light_color * diffIntensity;
 

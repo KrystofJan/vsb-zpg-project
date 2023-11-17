@@ -52,6 +52,9 @@
 #include "Texture2D.h"
 #include "TextureCubeMap.h"
 #include "DrawableSkyBox.h"
+#include "PhongMultipleLightsTextured.h"
+#include "HouseModel.h"
+#include "ZombieModel.h"
 
 class Scene
 {

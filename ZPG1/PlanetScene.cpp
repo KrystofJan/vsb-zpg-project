@@ -27,13 +27,13 @@ void PlanetScene::initScene()
 	);
 
 	TransformationComposite* earthInitTransform = new TransformationComposite();
-	earthInitTransform->addTransformation(new TranslationTransformation(-8.0, 'x'));
+	// earthInitTransform->addTransformation(new TranslationTransformation(-8.0, 'x'));
 	earthInitTransform->applyTransformation();
 
 	earthUpdatingTransform = new TransformationComposite(earthInitTransform->getModelMatrix());
 	earthUpdatingTransform->addTransformation(new TranslationTransformation(glm::vec3(8.0, 0, 0)));
 	earthUpdatingTransform->addTransformation(new RotationTransformation(1.5, glm::vec3(0, 1, 0)));
-	earthUpdatingTransform->addTransformation(new TranslationTransformation(glm::vec3(-8.0, 0, 0)));
+	// earthUpdatingTransform->addTransformation(new TranslationTransformation(glm::vec3(-8.0, 0, 0)));
 
 	this->earth = new DrawableModel(
 		new SphereModel(),

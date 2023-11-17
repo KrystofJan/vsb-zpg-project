@@ -20,5 +20,4 @@ CubeModel::CubeModel()
 void CubeModel::DrawModel()
 {
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-
 }

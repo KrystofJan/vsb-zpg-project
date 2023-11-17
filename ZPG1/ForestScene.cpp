@@ -1,24 +1,26 @@
 #include "ForestScene.h"
 #include <stdlib.h>
 #include <random>
+#include <assimp/Importer.hpp>
+
 void ForestScene::initScene()
 {
 	c = new Camera(this->window);
 	float pos = 3;
-	BaseLight* light = new BaseLight(glm::vec3(3, 10.0, 0.0), glm::vec4(0.3137, 0.4078, 0.5255, 1.0));
 	LightRepository* lr = new LightRepository();
 
-	 lr->addLight(light);
+	/*BaseLight* light = new BaseLight(glm::vec3(3, 10.0, 0.0), glm::vec4(0.003922, 0, 0.082353,1.0));
+	 lr->addLight(light);*/
 
 	 this->flashlight = new SpotLight(
 		 c->getPosition(),
 		 glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		 c->getDirection(),
-		 glm::cos(glm::radians(12.5f)),
-		 glm::cos(glm::radians(15.0f)),
-		 0.4f,
-		 0.4f,
-		 0.1f,
+		 glm::cos(glm::radians(17.5f)),
+		 glm::cos(glm::radians(20.0f)),
+		 1.0f,
+		 0.2f,
+		 0.01f,
 		 glm::vec4(0.1, 0.1, 0.1, 1.0),
 		 glm::vec4(0.385, 0.647, 0.812, 1.0),
 		 glm::vec4(1.0, 1.0, 1.0, 1.0)
@@ -40,9 +42,9 @@ void ForestScene::initScene()
 
 
 	 tex->addTexture(new TextureCubeMap(
-		 "textures/cubemap/posx.jpg", "textures/cubemap/negx.jpg",
-		 "textures/cubemap/posy.jpg", "textures/cubemap/negy.jpg",
-		 "textures/cubemap/posz.jpg", "textures/cubemap/negz.jpg"
+		 "textures/nightSky/posx.bmp", "textures/nightSky/negx.bmp",
+		 "textures/nightSky/posy.bmp", "textures/nightSky/negy.bmp",
+		 "textures/nightSky/posz.bmp", "textures/nightSky/negz.bmp"
 	 ));
 
 	 TransformationComposite* skyBoxTi = new TransformationComposite();
@@ -104,7 +106,7 @@ void ForestScene::initScene()
 				64 // specIntensity
 			),
 			tr->getTextureAt(0),
-			new TextureShader(c, lr),
+			new PhongMultipleLightsTextured(c, lr),
 			plain_trans,
 			updating_plain_trans
 		)
@@ -133,7 +135,7 @@ void ForestScene::initScene()
 						glm::vec4(0.1, 0.1, 0.1, 1.0),	// ambient
 						glm::vec4(0.385, 0.647, 0.812, 1.0),  // diffuse
 						glm::vec4(1.0, 1.0, 1.0, 1.0), // specStrength
-						glm::vec4(0.1, 0.7, 0.3, 1.0), // color
+						glm::vec4(0.3, 0.9, 0.4, 1.0), // color
 						8 // specIntensity
 					),
 					new PhongShaderMultipleLights(c, lr),
@@ -179,7 +181,7 @@ void ForestScene::initScene()
 
 	//suzi
 	TransformationComposite* suzi_trans = new TransformationComposite();
-	suzi_trans->addTransformation(new ScaleTransformation(2));
+	suzi_trans->addTransformation(new ScaleTransformation(.7));
 	suzi_trans->addTransformation(new TranslationTransformation(glm::vec3(2.0, 1.0, 1)));
 
 	suzi_trans->applyTransformation();
@@ -192,14 +194,53 @@ void ForestScene::initScene()
 				glm::vec4(0.1, 0.1, 0.1, 1.0),	// ambient
 				glm::vec4(0.385, 0.647, 0.812, 1.0),  // diffuse
 				glm::vec4(1.0, 1.0, 1.0, 1.0), // specStrength
-				glm::vec4(0.1, 0.5, 0.3, 1.0), // color
-				64 // specIntensity
+				glm::vec4(0.192157, 0.129412, 0.070588, 1.0), // color
+				1 // specIntensity
 			),
 			new PhongShaderMultipleLights(c, lr),
 			suzi_trans,
 			updating_suzi_trans
 		)
 	);
+
+	TransformationComposite* initHouseTran = new TransformationComposite();
+	initHouseTran->addTransformation(new TranslationTransformation(glm::vec3(-35, 0, 0)));
+	initHouseTran->addTransformation(new RotationTransformation(30.0f,glm::vec3(0, 1, 0)));
+	TransformationComposite* updateHouseTran = new TransformationComposite(initHouseTran->applyTransformation());
+
+	tr->addTexture(new Texture2D("textures/models/house.png"));
+
+	drawableModels.push_back(
+		new DrawableModel(
+			new HouseModel(),
+			new Material(),
+			tr->getTextureAt(1),
+			new PhongMultipleLightsTextured(c, lr),
+			initHouseTran,
+			updateHouseTran
+		)
+	);
+
+
+	TransformationComposite* initZombieTran = new TransformationComposite();
+	initZombieTran->addTransformation(new TranslationTransformation(glm::vec3(-25, 0, 3.5)));
+	initZombieTran->addTransformation(new RotationTransformation(-45.0f, glm::vec3(0, 1, 0)));
+
+	TransformationComposite* updateZombieTran = new TransformationComposite(initZombieTran->applyTransformation());
+
+	tr->addTexture(new Texture2D("textures/models/zombie.png"));
+
+	drawableModels.push_back(
+		new DrawableModel(
+			new ZombieModel(),
+			new Material(),
+			tr->getTextureAt(2),
+			new TextureShader(c, lr),
+			initZombieTran,
+			updateZombieTran
+		)
+	);
+
 }
 
 void ForestScene::display() {

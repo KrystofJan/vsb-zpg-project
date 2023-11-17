@@ -48,13 +48,13 @@ void DrawableModel::DisplayDry() {
 	this->transformations->applyTransformation();
 	this->shader->activateShaderProgram();
 
-	this->shader->updateLights();
 	if (texture != nullptr) {
 		this->shader->updateUniformLocation("textureUnitID", this->texture->getPosition());
 	}
+
 	this->shader->updateUniformLocation("modelMatrix", &this->transformations->getModelMatrix()[0][0]);
 
-	this->shader->updateUniformLocation("amb", material->getAmbient());
+	this->shader->updateUniformLocation("amb", this->material->getAmbient());
 	this->shader->updateUniformLocation("diff", this->material->getDiffuse());
 	this->shader->updateUniformLocation("objColor", this->material->getObjColor());
 	this->shader->updateUniformLocation("powExponent", this->material->getSpecIntensity());

@@ -25,7 +25,7 @@ void main(void) {
 
     vec3 reflectDir = reflect(-lightDir, worldNormal); 
 
-	float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
+	float spec = pow(max(dot(viewDir,reflectDir), 0.0), powExponent);
 
     vec4 specular = specularStrength * spec * light_color;
 

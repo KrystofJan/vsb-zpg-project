@@ -9,15 +9,17 @@
 #include "ForestScene.h"
 #include "TextureTestScene.h"
 #include "LightTestScene.h"
+#include "ModelLoadingScene.h"
 
 int main(void)
 {
-	// SceneOne *s = new SceneOne(); // Phong
+	SceneOne *s = new SceneOne();
 	// SceneTwo *s = new SceneTwo();
-	// LightTestScene* s = new LightTestScene(); // svetla
-	// SceneThree *s = new SceneThree(); //idk
-	// PlanetScene *s = new PlanetScene(); // planetky
-	ForestScene* s = new ForestScene(); // stromecky
+	// LightTestScene* s = new LightTestScene();
+	// SceneThree *s = new SceneThree();
+	// PlanetScene *s = new PlanetScene();
+	// ForestScene* s = new ForestScene();
+	// ModelLoadingScene* s = new ModelLoadingScene();
 	// TextureTestScene* s = new TextureTestScene();
 	Renderer* r = new Renderer(s);	
 	r->Render();
