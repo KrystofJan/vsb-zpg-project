@@ -25,5 +25,6 @@ SphereModel::SphereModel()
 
 void SphereModel::DrawModel()
 {
+	glStencilFunc(GL_ALWAYS, id, 0xFF);
 	glDrawArrays(GL_TRIANGLES, 0, 2880);
 }

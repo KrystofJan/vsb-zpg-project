@@ -21,6 +21,8 @@ protected:
 	GLuint VAO;
 	int vertexCount;
 	std::vector<float> modelData;
+	int id;
+
 public:
 	Model();
 	Model(std::string path);

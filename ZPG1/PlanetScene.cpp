@@ -27,7 +27,7 @@ void PlanetScene::initScene()
 	);
 
 	TransformationComposite* earthInitTransform = new TransformationComposite();
-	// earthInitTransform->addTransformation(new TranslationTransformation(-8.0, 'x'));
+	earthInitTransform->addTransformation(new TranslationTransformation(-8.0, 'x'));
 	earthInitTransform->applyTransformation();
 
 	earthUpdatingTransform = new TransformationComposite(earthInitTransform->getModelMatrix());
@@ -51,12 +51,12 @@ void PlanetScene::initScene()
 
 	TransformationComposite* moon2InitTransform = new TransformationComposite();
 	moon2InitTransform->addTransformation(new TranslationTransformation(-3.0, 'x'));
-	// moon2InitTransform->addTransformation(new ScaleTransformation(0.2));
+	moon2InitTransform->addTransformation(new ScaleTransformation(0.2));
 
 	moon2InitTransform->applyTransformation();
 
 	TransformationComposite* moonUpdt = new TransformationComposite(moon2InitTransform->getModelMatrix());
-	// moonUpdt->addTransformation(new ScaleTransformation(0.5));
+	moonUpdt->addTransformation(new ScaleTransformation(0.5));
 
 	moonUpdt->addTransformation(new TranslationTransformation(glm::vec3(3.0, 0, 0)));
 	moonUpdt->addTransformation(new RotationTransformation(5, glm::vec3(0, 1, 0)));

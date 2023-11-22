@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="BlinnShader.cpp" />
     <ClCompile Include="BlueShader.cpp" />
+    <ClCompile Include="ClickTestScene.cpp" />
     <ClCompile Include="ConstantShader.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="DrawableSkyBox.cpp" />
@@ -201,6 +202,7 @@
   <ItemGroup>
     <ClInclude Include="BlinnShader.h" />
     <ClInclude Include="BlueShader.h" />
+    <ClInclude Include="ClickTestScene.h" />
     <ClInclude Include="ConstantShader.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DirectionalLight.h" />

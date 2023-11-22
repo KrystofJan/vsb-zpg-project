@@ -31,6 +31,8 @@ Scene::Scene() {
 	glfwMakeContextCurrent(this->window);
 	glfwSwapInterval(1);
 
+	this->setMouseMoveCallback();
+	this->setMouseClickCallback();
 	// start GLEW extension handler
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -77,3 +79,14 @@ void Scene::display() {
 void Scene::setWindowSizeBuffer() {
 	glfwSetWindowSizeCallback(this->window, [](GLFWwindow* window, int width, int height)-> void {CallbackController::getInstance().window_size_callback(window, width, height); });
 }
+
+void Scene::setMouseClickCallback()
+{
+	glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mode)-> void {CallbackController::getInstance().button_callback(window, button, action, mode); });
+}
+
+void Scene::setMouseMoveCallback()
+{
+	glfwSetCursorPosCallback(window, [](GLFWwindow* window, double cx, double cy)-> void {CallbackController::getInstance().cursor_callback(window, cx, cy); });
+}
+

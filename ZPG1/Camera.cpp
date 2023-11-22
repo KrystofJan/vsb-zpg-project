@@ -66,7 +66,6 @@ void Camera::controls() {
         double x, y;
         glfwGetCursorPos(this->window, &x, &y);
         this->call_cursor(x, y);
-
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
     {

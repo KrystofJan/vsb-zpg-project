@@ -58,6 +58,9 @@
 
 class Scene
 {
+private:
+	int* mouseX;
+	int* mouseY;
 protected:
 	std::vector<DrawableModel*> drawableModels;
 	GLFWwindow* window;
@@ -69,6 +72,8 @@ public:
 	void destroyWindow();
 	void displayTransform();
 	void setWindowSizeBuffer();
+	void setMouseClickCallback();
+	void setMouseMoveCallback();
 	void virtual display();
 };
 

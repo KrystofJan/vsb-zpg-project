@@ -10,10 +10,11 @@
 #include "TextureTestScene.h"
 #include "LightTestScene.h"
 #include "ModelLoadingScene.h"
+#include "ClickTestScene.h"
 
 int main(void)
 {
-	SceneOne *s = new SceneOne();
+	// SceneOne *s = new SceneOne();
 	// SceneTwo *s = new SceneTwo();
 	// LightTestScene* s = new LightTestScene();
 	// SceneThree *s = new SceneThree();
@@ -21,6 +22,7 @@ int main(void)
 	// ForestScene* s = new ForestScene();
 	// ModelLoadingScene* s = new ModelLoadingScene();
 	// TextureTestScene* s = new TextureTestScene();
+	// ClickTestScene* s = new ClickTestScene();
 	Renderer* r = new Renderer(s);	
 	r->Render();
 }

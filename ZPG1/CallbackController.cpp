@@ -29,8 +29,8 @@ void CallbackController::window_size_callback(GLFWwindow* window, int width, int
 	return getInstance().window_size_callback(window, width, height);
 }
 
-void CallbackController::cursor_callback(GLFWwindow* window, double x, double y) {
-
+void CallbackController::cursor_callback(GLFWwindow* window, double x, double y) 
+{
 	return getInstance().cursor_callback(window, x, y);
 }
 

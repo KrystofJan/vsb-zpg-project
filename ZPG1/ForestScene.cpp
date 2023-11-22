@@ -27,16 +27,16 @@ void ForestScene::initScene()
 	 );
 	 lr->addLight(flashlight);
 
-	//DirectionalLight* dl = new DirectionalLight(
-	//	glm::vec3(2.0, 0, 0),
-	//	glm::vec4(1.0, 1.0, 1.0, 1.0),
+	DirectionalLight* dl = new DirectionalLight(
+		glm::vec3(2.0, 0, 0),
+		glm::vec4(1.0, 1.0, 1.0, 1.0),
 
-	//	glm::vec3(-0.2f, -1.0f, -0.3f),
-	//	glm::vec4(0.05f, 0.05f, 0.05f, 1.0f),
-	//	glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
-	//	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
-	//);
-	//lr->addDirectionalLight(dl);
+		glm::vec3(-0.2f, -1.0f, -0.3f),
+		glm::vec4(0.05f, 0.05f, 0.05f, 1.0f),
+		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
+		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
+	);
+	lr->addLight(dl);
 
 	 TextureRepository* tex = new TextureRepository();
 
@@ -111,6 +111,7 @@ void ForestScene::initScene()
 			updating_plain_trans
 		)
 	);
+	tr->addTexture(new Texture2D("textures/models/tree.png"));
 	//trees
 	for (int i = 5; i > -5; --i) {
 		for (int j = 5; j > -5; --j) {
@@ -138,6 +139,7 @@ void ForestScene::initScene()
 						glm::vec4(0.3, 0.9, 0.4, 1.0), // color
 						8 // specIntensity
 					),
+					// tr->getTextureAt(1),
 					new PhongShaderMultipleLights(c, lr),
 					tree_trans,
 					updating_tree_trans
@@ -214,7 +216,7 @@ void ForestScene::initScene()
 		new DrawableModel(
 			new HouseModel(),
 			new Material(),
-			tr->getTextureAt(1),
+			tr->getTextureAt(2),
 			new PhongMultipleLightsTextured(c, lr),
 			initHouseTran,
 			updateHouseTran
@@ -234,7 +236,7 @@ void ForestScene::initScene()
 		new DrawableModel(
 			new ZombieModel(),
 			new Material(),
-			tr->getTextureAt(2),
+			tr->getTextureAt(3),
 			new TextureShader(c, lr),
 			initZombieTran,
 			updateZombieTran
