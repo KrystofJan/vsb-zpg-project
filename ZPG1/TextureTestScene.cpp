@@ -2,9 +2,9 @@
 
 void TextureTestScene::initScene()
 {
-	cam = new Camera(this->window);
+	camera = new Camera(this->window);
 
-	LightRepository* lr = new LightRepository();
+	lightRepository = new LightRepository();
 
 	DirectionalLight* dl = new DirectionalLight(
 		glm::vec3(2.0, 0, 0),
@@ -16,7 +16,7 @@ void TextureTestScene::initScene()
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
 
-	lr->addLight(dl);
+	lightRepository->addLight(dl);
 
 	TextureRepository* tex = new TextureRepository();
 
@@ -34,7 +34,7 @@ void TextureTestScene::initScene()
 		new SkyCubeModel(),
 		new Material(glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1, 1, 1, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.0, 1.0), 16),
 		tex->getTextureAt(0),
-		new SkyBoxTextureShader(cam, lr),
+		new SkyBoxTextureShader(camera, lightRepository),
 		skyBoxTi,
 		skyBoxTu
 	);
@@ -52,13 +52,13 @@ void TextureTestScene::initScene()
 	plainT2->addTransformation(new TranslationTransformation(-3, 'x'));
 	plainT2->applyTransformation();
 	TransformationComposite* plainTU2 = new TransformationComposite(plainT2->getModelMatrix());
-	skyBoxTu->addTransformation(new TranslationTransformation(cam->getPosition()));
+	skyBoxTu->addTransformation(new TranslationTransformation(camera->getPosition()));
 
 	DrawableModel* plain2 = new DrawableModel(
 		new TexturedPlainModel(),
 		new Material(glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1, 1, 1, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
 		tex->getTextureAt(1),
-		new TextureShader(cam, lr),
+		new TextureShader(camera, lightRepository),
 		plainT2,
 		plainTU2
 	);

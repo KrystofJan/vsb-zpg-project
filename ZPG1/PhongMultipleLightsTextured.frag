@@ -153,7 +153,7 @@ vec4 CalcSpotLight(Lights light){
     diffuse   *= attenuation;
     specular *= attenuation;   
         
-    return (ambient + diffuse + specular);
+    return (diffuse + specular);
 
 }
 

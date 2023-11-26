@@ -142,6 +142,7 @@
     <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="GiftModel.cpp" />
     <ClCompile Include="HouseModel.cpp" />
+    <ClCompile Include="HouseScene.cpp" />
     <ClCompile Include="LambertShader.cpp" />
     <ClCompile Include="BaseLight.cpp" />
     <ClCompile Include="LightRepository.cpp" />
@@ -167,7 +168,6 @@
     <ClCompile Include="RainbowShader.cpp" />
     <ClCompile Include="RedShader.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="RotationAroundObjectTransformation.cpp" />
     <ClCompile Include="RotationTransformation.cpp" />
     <ClCompile Include="ScaleTransformation.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -185,6 +185,7 @@
     <ClCompile Include="SquareModel.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="SuziModel.cpp" />
+    <ClCompile Include="TerrainModel.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureCubeMap.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Gift.h" />
     <ClInclude Include="GiftModel.h" />
     <ClInclude Include="HouseModel.h" />
+    <ClInclude Include="HouseScene.h" />
     <ClInclude Include="LambertShader.h" />
     <ClInclude Include="BaseLight.h" />
     <ClInclude Include="LightRepository.h" />
@@ -237,7 +239,6 @@
     <ClInclude Include="RainbowShader.h" />
     <ClInclude Include="RedShader.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RotationAroundObjectTransformation.h" />
     <ClInclude Include="RotationTransformation.h" />
     <ClInclude Include="ScaleTransformation.h" />
     <ClInclude Include="Scene.h" />
@@ -259,6 +260,7 @@
     <ClInclude Include="suziFlat.h" />
     <ClInclude Include="SuziModel.h" />
     <ClInclude Include="suziSmooth.h" />
+    <ClInclude Include="TerrainModel.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureCubeMap.h" />

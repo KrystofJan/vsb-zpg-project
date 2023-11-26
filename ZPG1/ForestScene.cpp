@@ -5,17 +5,17 @@
 
 void ForestScene::initScene()
 {
-	c = new Camera(this->window);
+	this->camera = new Camera(this->window);
 	float pos = 3;
-	LightRepository* lr = new LightRepository();
+	this->lightRepository = new LightRepository();
 
 	/*BaseLight* light = new BaseLight(glm::vec3(3, 10.0, 0.0), glm::vec4(0.003922, 0, 0.082353,1.0));
 	 lr->addLight(light);*/
 
 	 this->flashlight = new SpotLight(
-		 c->getPosition(),
+		 camera->getPosition(),
 		 glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		 c->getDirection(),
+		 camera->getDirection(),
 		 glm::cos(glm::radians(17.5f)),
 		 glm::cos(glm::radians(20.0f)),
 		 1.0f,
@@ -25,7 +25,7 @@ void ForestScene::initScene()
 		 glm::vec4(0.385, 0.647, 0.812, 1.0),
 		 glm::vec4(1.0, 1.0, 1.0, 1.0)
 	 );
-	 lr->addLight(flashlight);
+	 lightRepository->addLight(flashlight);
 
 	DirectionalLight* dl = new DirectionalLight(
 		glm::vec3(2.0, 0, 0),
@@ -36,7 +36,7 @@ void ForestScene::initScene()
 		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
-	lr->addLight(dl);
+	lightRepository->addLight(dl);
 
 	 TextureRepository* tex = new TextureRepository();
 
@@ -54,7 +54,7 @@ void ForestScene::initScene()
 		 new SkyCubeModel(),
 		 new Material(glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1, 1, 1, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 0.0, 1.0), 16),
 		 tex->getTextureAt(0),
-		 new SkyBoxTextureShader(c, lr),
+		 new SkyBoxTextureShader(camera, lightRepository),
 		 skyBoxTi,
 		 skyBoxTu
 	 );
@@ -81,7 +81,7 @@ void ForestScene::initScene()
 				glm::vec4(.5, .5, .5, 1.0), // color
 				32 // specIntensity
 			),
-			new ConstantShader(c, lr),
+			new ConstantShader(camera, lightRepository),
 			sun_trans,
 			updating_sun_trans
 		)
@@ -106,7 +106,7 @@ void ForestScene::initScene()
 				64 // specIntensity
 			),
 			tr->getTextureAt(0),
-			new PhongMultipleLightsTextured(c, lr),
+			new PhongMultipleLightsTextured(camera, lightRepository),
 			plain_trans,
 			updating_plain_trans
 		)
@@ -140,14 +140,14 @@ void ForestScene::initScene()
 						8 // specIntensity
 					),
 					// tr->getTextureAt(1),
-					new PhongShaderMultipleLights(c, lr),
+					new PhongShaderMultipleLights(camera, lightRepository),
 					tree_trans,
 					updating_tree_trans
 				)
 			);
 		}
 	}
-	//bush
+	////bush
 	for (int i = 5; i > -5; --i) {
 		for (int j = 5; j > -5; --j) {
 			std::random_device rd;  // Initialize the random number generator
@@ -173,7 +173,7 @@ void ForestScene::initScene()
 						glm::vec4(0.2, 1.0, 0.4, 1.0), // color
 						8 // specIntensity
 					),
-					new PhongShaderMultipleLights(c, lr),
+					new PhongShaderMultipleLights(camera, lightRepository),
 					bush_trans,
 					updating_bush_trans
 				)
@@ -199,7 +199,7 @@ void ForestScene::initScene()
 				glm::vec4(0.192157, 0.129412, 0.070588, 1.0), // color
 				1 // specIntensity
 			),
-			new PhongShaderMultipleLights(c, lr),
+			new PhongShaderMultipleLights(camera, lightRepository),
 			suzi_trans,
 			updating_suzi_trans
 		)
@@ -217,7 +217,7 @@ void ForestScene::initScene()
 			new HouseModel(),
 			new Material(),
 			tr->getTextureAt(2),
-			new PhongMultipleLightsTextured(c, lr),
+			new PhongMultipleLightsTextured(camera, lightRepository),
 			initHouseTran,
 			updateHouseTran
 		)
@@ -237,7 +237,7 @@ void ForestScene::initScene()
 			new ZombieModel(),
 			new Material(),
 			tr->getTextureAt(3),
-			new TextureShader(c, lr),
+			new TextureShader(camera, lightRepository),
 			initZombieTran,
 			updateZombieTran
 		)
@@ -246,8 +246,8 @@ void ForestScene::initScene()
 }
 
 void ForestScene::display() {
-	this->flashlight->updateDirection(c->getDirection());
-	this->flashlight->upgradePosition(c->getPosition());
+	this->flashlight->updateDirection(camera->getDirection());
+	this->flashlight->upgradePosition(camera->getPosition());
 	for (DrawableModel* m : drawableModels) {
 		m->DisplayDry();
 	}

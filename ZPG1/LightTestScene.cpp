@@ -2,15 +2,15 @@
 
 void LightTestScene::initScene()
 {
-	c = new Camera(this->window);
+	camera = new Camera(this->window);
 
-	LightRepository* lr = new LightRepository();
+	lightRepository = new LightRepository();
 
 	//BaseLight* plainLight = new BaseLight(	
 	//	glm::vec3(7.0, 0, 0),
 	//	glm::vec4(1.0, 1.0, 1.0, 1.0)
 	//);
-	// lr->addLight(plainLight);
+	// lightRepository->addLight(plainLight);
 	DirectionalLight* dl = new DirectionalLight(
 		glm::vec3(2.0f, .0f, .0f),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
@@ -20,11 +20,11 @@ void LightTestScene::initScene()
 		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
-	lr->addLight(dl);
+	lightRepository->addLight(dl);
 	this->flashlight = new SpotLight(
-		c->getPosition(),
+		camera->getPosition(),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		c->getDirection(),
+		camera->getDirection(),
 		glm::cos(glm::radians(12.5f)),
 		glm::cos(glm::radians(15.0f)),
 		0.4f,
@@ -34,10 +34,10 @@ void LightTestScene::initScene()
 		glm::vec4(0.385, 0.647, 0.812, 1.0),
 		glm::vec4(1.0, 1.0, 1.0, 1.0)
 	);
-	lr->addLight(flashlight);
+	lightRepository->addLight(flashlight);
 
 
-	lr->addLight(
+	lightRepository->addLight(
 		new PointLight(
 			glm::vec3(2.0, 0, 0),
 			glm::vec4(1.0, 1.0, 1.0, 1.0),
@@ -62,7 +62,7 @@ void LightTestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new PlainModel(),
 			new Material(glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1, 1, 1, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new PhongShaderMultipleLights(c, lr),
+			new PhongShaderMultipleLights(camera, lightRepository),
 			transformPlain,
 			tp
 		)
@@ -79,7 +79,7 @@ void LightTestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(glm::vec4(1,1, 1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new PhongShaderMultipleLights(c, lr),
+			new PhongShaderMultipleLights(camera, lightRepository),
 			transform,
 			t
 		)
@@ -96,7 +96,7 @@ void LightTestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(glm::vec4(1,1, 1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new PhongShaderMultipleLights(c, lr),
+			new PhongShaderMultipleLights(camera, lightRepository),
 			transform2,
 			t2
 		)
@@ -114,7 +114,7 @@ void LightTestScene::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(glm::vec4(1,1, 1, 1.0), glm::vec4(0.385, 0.647, 0.812, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), glm::vec4(1.0, 1.0, 1.0, 1.0), 16),
-			new PhongShaderMultipleLights(c, lr),
+			new PhongShaderMultipleLights(camera, lightRepository),
 			transform3,
 			t3
 		)
@@ -122,8 +122,8 @@ void LightTestScene::initScene()
 }
 
 void LightTestScene::display() {
-	this->flashlight->updateDirection(c->getDirection());
-	this->flashlight->upgradePosition(c->getPosition());
+	this->flashlight->updateDirection(camera->getDirection());
+	this->flashlight->upgradePosition(camera->getPosition());
 
 	for (DrawableModel* m : drawableModels) {
 		m->DisplayDry();

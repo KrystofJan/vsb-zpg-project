@@ -2,12 +2,12 @@
 
 void SceneOne::initScene()
 {
-	Camera* c = new Camera(this->window);
+	camera = new Camera(this->window);
 
 	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
-	LightRepository* lr = new LightRepository();
+	lightRepository = new LightRepository();
 
-	lr->addLight(light);
+	lightRepository->addLight(light);
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);
 	glm::vec4 specular_strength = glm::vec4(1.0, 1.0, 1.0, 1.0);
@@ -24,7 +24,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShader(camera, lightRepository),
 			transform,
 			tr
 		)
@@ -41,7 +41,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShader(camera, lightRepository),
 			transform2,
 			tr2
 		)
@@ -58,7 +58,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShader(camera, lightRepository),
 			transform3,
 			tr3
 		)
@@ -74,7 +74,7 @@ void SceneOne::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new SphereModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new BlinnShader(c, lr),
+			new BlinnShader(camera, lightRepository),
 			transform4,
 			tr4
 		)

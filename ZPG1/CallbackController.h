@@ -4,7 +4,7 @@ class CallbackController
 {
 private:
     CallbackController() {};
-
+	
 public:
 	static CallBacks& getInstance();
 	void error_callback(int error, const char* description);

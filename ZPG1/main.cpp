@@ -11,6 +11,7 @@
 #include "LightTestScene.h"
 #include "ModelLoadingScene.h"
 #include "ClickTestScene.h"
+#include "HouseScene.h"
 
 int main(void)
 {
@@ -23,6 +24,8 @@ int main(void)
 	// ModelLoadingScene* s = new ModelLoadingScene();
 	// TextureTestScene* s = new TextureTestScene();
 	// ClickTestScene* s = new ClickTestScene();
+	HouseScene* s = new HouseScene();
+	
 	Renderer* r = new Renderer(s);	
 	r->Render();
 }

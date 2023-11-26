@@ -49,6 +49,7 @@ public:
 	glm::mat4 getViewMatrix(void);
 	glm::vec3 getPosition();
 	glm::vec3 getDirection();
+	glm::vec3 unProjectCameraPos(glm::vec3 position);
 	void notify();
 };
 

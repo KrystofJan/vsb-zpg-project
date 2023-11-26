@@ -2,12 +2,12 @@
 
 void SceneThree::initScene()
 {
-	Camera* c = new Camera(this->window);
+	camera = new Camera(this->window);
 
 	BaseLight* light = new BaseLight(glm::vec3(-10.0, 10.0, -1.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
-	LightRepository* lr = new LightRepository();
+	lightRepository = new LightRepository();
 
-	lr->addLight(light);
+	lightRepository->addLight(light);
 
 	glm::vec4 ambient = glm::vec4(0.1, 0.1, 0.1, 1.0);
 	glm::vec4 diffuse = glm::vec4(0.385, 0.647, 0.812, 1.0);
@@ -26,7 +26,7 @@ void SceneThree::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new PlainModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new BlinnShader(c, lr),
+			new BlinnShader(camera, lightRepository),
 			transform,
 			t
 		)
@@ -43,7 +43,7 @@ void SceneThree::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new TreeModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new PhongShader(c, lr),
+			new PhongShader(camera, lightRepository),
 			transform2,
 			tr
 		)
@@ -62,7 +62,7 @@ void SceneThree::initScene()
 	this->drawableModels.push_back(
 		new DrawableModel(new GiftModel(),
 			new Material(ambient, diffuse, specular_strength, object_Color, specular_intensity),
-			new LambertShader(c, lr),
+			new LambertShader(camera, lightRepository),
 			transform3,
 			rt
 		)

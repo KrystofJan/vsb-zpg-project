@@ -3,7 +3,6 @@
 class PlanetScene : public Scene
 {
 private:
-	Camera* c;
 	BaseLight* light;
 	TransformationComposite* sunUpdatingTransform;
 	TransformationComposite* earthUpdatingTransform;

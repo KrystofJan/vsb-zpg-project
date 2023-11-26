@@ -55,15 +55,19 @@
 #include "PhongMultipleLightsTextured.h"
 #include "HouseModel.h"
 #include "ZombieModel.h"
+#include "TerrainModel.h"
 
 class Scene
 {
 private:
 	int* mouseX;
 	int* mouseY;
+	DrawableModel* tree;
 protected:
 	std::vector<DrawableModel*> drawableModels;
 	GLFWwindow* window;
+	Camera* camera;
+	LightRepository* lightRepository;
 public:
 	Scene();
 	virtual void initScene() = 0;
@@ -74,6 +78,7 @@ public:
 	void setWindowSizeBuffer();
 	void setMouseClickCallback();
 	void setMouseMoveCallback();
+	void plantTreeToCursor();
 	void virtual display();
 };
 

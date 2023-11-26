@@ -2,8 +2,8 @@
 
 void ModelLoadingScene::initScene()
 {
-	c = new Camera(this->window);
-	LightRepository* lr = new LightRepository();
+	camera = new Camera(this->window);
+	lightRepository = new LightRepository();
 	TextureRepository* tr = new TextureRepository();
 	DirectionalLight* dl = new DirectionalLight(
 		glm::vec3(.0, 10, 0),
@@ -15,7 +15,7 @@ void ModelLoadingScene::initScene()
 		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
-	lr->addLight(dl);
+	lightRepository->addLight(dl);
 
 	DirectionalLight* dld = new DirectionalLight(
 		glm::vec3(.0, 10, 0),
@@ -27,24 +27,24 @@ void ModelLoadingScene::initScene()
 		glm::vec4(0.4f, 0.4f, 0.4f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	);
-	lr->addLight(dld);
+	lightRepository->addLight(dld);
 
 	TransformationComposite* initHouseTran = new TransformationComposite();
+	initHouseTran->addTransformation(new ScaleTransformation(.1));
 	TransformationComposite* updateHouseTran = new TransformationComposite(initHouseTran->applyTransformation());
 
-	tr->addTexture(new Texture2D("textures/models/house.png"));
+	tr->addTexture(new Texture2D("textures/models/tree.png"));
 
 	drawableModels.push_back(
 		new DrawableModel(
-			new HouseModel(),
+			new TreeModel(),
 			new Material(),
 			tr->getTextureAt(0),
-			new PhongMultipleLightsTextured(c, lr),
+			new TextureShader(camera, lightRepository),
 			initHouseTran,
 			updateHouseTran
 		)
 	);
-
 
 	TransformationComposite* initZombieTran = new TransformationComposite();
 	initZombieTran->addTransformation(new TranslationTransformation(glm::vec3(6.0, 0, 3.5)));
@@ -59,7 +59,7 @@ void ModelLoadingScene::initScene()
 			new ZombieModel(),
 			new Material(),
 			tr->getTextureAt(1),
-			new TextureShader(c, lr),
+			new TextureShader(camera, lightRepository),
 			initZombieTran,
 			updateZombieTran
 		)

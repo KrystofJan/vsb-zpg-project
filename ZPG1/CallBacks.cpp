@@ -2,6 +2,8 @@
 
 double mouseY = 0;
 double mouseX = 0;
+bool CallBacks::clicked = false;
+glm::vec3 CallBacks::position = glm::vec3(0);
 
 void CallBacks::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -39,5 +41,8 @@ void CallBacks::button_callback(GLFWwindow* window, int button, int action, int 
         glReadPixels(mouseX, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
         glReadPixels(mouseX, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
         printf("Clicked on pixel %f, %f, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index %u\n", mouseX, mouseY, color[0], color[1], color[2], color[3], depth, index);
+        clicked = true;
+        position = glm::vec3(mouseX, newy, depth);
     }
+
 }
