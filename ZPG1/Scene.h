@@ -56,6 +56,9 @@
 #include "HouseModel.h"
 #include "ZombieModel.h"
 #include "TerrainModel.h"
+#include "Line.h"
+#include "BezierCurve.h"
+#include "BezierBuilder.h"
 
 class Scene
 {
@@ -63,11 +66,18 @@ private:
 	int* mouseX;
 	int* mouseY;
 	DrawableModel* tree;
+	BezierCurve* b = nullptr;
+	int stencil_id = -1;
 protected:
 	std::vector<DrawableModel*> drawableModels;
 	GLFWwindow* window;
 	Camera* camera;
 	LightRepository* lightRepository;
+	BezierBuilder* bezierBuilder;
+
+	glm::mat4x3 bezier;
+
+
 public:
 	Scene();
 	virtual void initScene() = 0;
@@ -79,6 +89,8 @@ public:
 	void setMouseClickCallback();
 	void setMouseMoveCallback();
 	void plantTreeToCursor();
+	void travelOnLine(int index);
+	void travelBrezier();
 	void virtual display();
 };
 

@@ -2,8 +2,6 @@
 
 void SceneOne::initScene()
 {
-	camera = new Camera(this->window);
-
 	BaseLight* light = new BaseLight(glm::vec3(0.0, 0.0, 0.0), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	lightRepository = new LightRepository();
 

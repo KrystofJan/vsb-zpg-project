@@ -1,8 +1,6 @@
 #include "SceneTwo.h"
 void SceneTwo::initScene()
 {
-	camera = new Camera(this->window);
-
 	ScaleTransformation* sc = new ScaleTransformation(1);
 	TransformationComposite* transform = new TransformationComposite();
 	transform->addTransformation(new TranslationTransformation(1, 'z'));

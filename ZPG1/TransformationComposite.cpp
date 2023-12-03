@@ -37,3 +37,9 @@ glm::mat4 TransformationComposite::getModelMatrix()
 {
 	return this->modelMatrix;
 }
+
+void TransformationComposite::resetComposite()
+{
+	transformations.clear();
+	this->modelMatrix = glm::mat4(1);
+}

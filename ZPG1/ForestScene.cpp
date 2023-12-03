@@ -5,7 +5,6 @@
 
 void ForestScene::initScene()
 {
-	this->camera = new Camera(this->window);
 	float pos = 3;
 	this->lightRepository = new LightRepository();
 

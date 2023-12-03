@@ -1,6 +1,12 @@
 #include "Scene.h"
 
 Scene::Scene() {
+	//glm::mat4x3 B = glm::mat4x3(glm::vec3(-20, 0, -5),
+	//	glm::vec3(2, 0, -5),
+	//	glm::vec3(-4, 0, 10),
+	//	glm::vec3(-5, 0, 10));
+
+	//b = new BezierCurve(B);
 	glfwSetErrorCallback([](int error, const char* description)-> void { CallbackController::getInstance().error_callback(error, description); });
 	if (!glfwInit()) {
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
@@ -12,6 +18,9 @@ Scene::Scene() {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+
+	camera = new Camera(this->window);
+	bezierBuilder = new BezierBuilder(camera);
 
 	glfwMakeContextCurrent(this->window);
 	glfwSwapInterval(1);
@@ -104,5 +113,33 @@ void Scene::plantTreeToCursor()
 	);
 
 	drawableModels.push_back(tree);
+	CallBacks::plantTree = false;
 }
+
+void Scene::travelOnLine(int index)
+{
+	drawableModels[index]->transformations->resetComposite();
+	drawableModels[index]->transformations->addTransformation(new TranslationTransformation(b->calculatePoint()));
+}
+
+void Scene::travelBrezier()
+{
+	if (b != nullptr) {
+		drawableModels[stencil_id]->transformations->resetComposite();
+		drawableModels[stencil_id]->transformations->addTransformation(new TranslationTransformation(b->calculatePoint()));
+	}
+	else if (bezierBuilder->getStep() < 5 && CallBacks::moveObj) {
+		bezierBuilder->handleAssignment();
+		CallBacks::moveObj = false;
+	}
+	else if (bezierBuilder->getStep() == 5){
+		bezier = bezierBuilder->buildBezier();
+		b = new BezierCurve(bezier);
+		stencil_id = bezierBuilder->getStencil();
+		CallBacks::moveObj = false;
+	}
+
+
+}
+
 

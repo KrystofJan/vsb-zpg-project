@@ -4,7 +4,6 @@
 
 void HouseScene::initScene()
 {
-	camera = new Camera(this->window);
 	float pos = 3;
 	lightRepository = new LightRepository();
 
@@ -110,6 +109,18 @@ void HouseScene::initScene()
 		)
 	);
 
+	TransformationComposite* cubeT = new TransformationComposite();
+
+	this->drawableModels.push_back(
+		new DrawableModel(
+			new CubeModel(),
+			new Material(),
+			new PhongShaderMultipleLights(camera, lightRepository),
+			cubeT,
+			new TransformationComposite(cubeT->applyTransformation())
+		)
+	);
+
 	//tree
 	//tex->addTexture(new Texture2D("textures/models/tree.png"));
 	//for (int i = 0; i < 5; ++i) 
@@ -152,11 +163,13 @@ void HouseScene::display() {
 	this->flashlight->upgradePosition(camera->getPosition());
 
 	if (CallBacks::clicked) {
-		plantTreeToCursor();
+		// plantTreeToCursor();
 		// printf("%f, %f, %f \n",CallBacks::position.x, CallBacks::position.y, CallBacks::position.z);
-
+		// selected_stencil = CallBacks::stencil_id;
 		CallBacks::clicked = false;
 	}
+
+	travelBrezier();
 
 	for (DrawableModel* m : drawableModels) {
 		m->DisplayDry();

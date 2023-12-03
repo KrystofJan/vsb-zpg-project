@@ -12,9 +12,9 @@ protected:
 	Shader* shader;
 	TransformationComposite* initTransformations;
 	Material* material;
-	TransformationComposite* transformations;
 	Texture* texture;
 public:
+	TransformationComposite* transformations;
 	DrawableModel(Model* mod, Material* mat, Texture* te, Shader* s, TransformationComposite* it, TransformationComposite* t);
 	DrawableModel(Model* mod, Material* mat, Shader* s, TransformationComposite* it, TransformationComposite* t);
 	glm::mat4 getUpdatingTransformationModelMatrix();

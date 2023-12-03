@@ -14,5 +14,6 @@ public:
 	glm::mat4 applyTransformation() override;
 	void popTransformation();
 	glm::mat4 getModelMatrix();
+	void resetComposite();
 };
 

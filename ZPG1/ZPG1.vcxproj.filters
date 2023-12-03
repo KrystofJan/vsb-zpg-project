@@ -165,9 +165,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="SizeScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="DirectionalLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -232,6 +229,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TerrainModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -374,9 +380,6 @@
     <ClInclude Include="ForestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SizeScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LightTestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -459,6 +462,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TerrainModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

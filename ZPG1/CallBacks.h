@@ -11,6 +11,9 @@ class CallBacks
 public:
 	static bool clicked;
 	static glm::vec3 position;
+	static int stencil_id;
+	static bool plantTree;
+	static bool moveObj;
 
 	static void error_callback(int error, const char* description);
 
