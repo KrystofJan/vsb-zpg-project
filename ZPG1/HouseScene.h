@@ -7,5 +7,6 @@ private:
 public:
 	void initScene() override;
 	void display() override;
+	void shoot();
 };
 

@@ -45,16 +45,16 @@ void main(void) {
     for(int i = 0; i < ammountOfLights; i++)
     {
         if (lights[i].type == 0){
-            result += CalcBaseLight(lights[i]);
+            // result += CalcBaseLight(lights[i]);
         }
         if (lights[i].type == 1){
             result += CalcDirectionalLight(lights[i]);
         }
         if (lights[i].type == 2){
-            result += CalcPointLight(lights[i]);
+           //  result += CalcPointLight(lights[i]);
         }
         if (lights[i].type == 3){
-            result += CalcSpotLight(lights[i]);
+            // result += CalcSpotLight(lights[i]);
         }
     }
         
@@ -112,14 +112,11 @@ vec4 CalcDirectionalLight(Lights light){
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
     vec4 diffuse = light.diffuse  * diff * diffIntensity * light.color;
 
-    vec3 viewDir = normalize(cameraPos - worldPos.xyz);
-    vec3 reflectDir = reflect(-lightDir, worldNormal); 
+    vec3 viewDir = normalize(cameraPos - vec3(worldPos / worldPos.w));
+    vec3 reflectDir = reflect(-lightDir, worldNormal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), powExponent);
+    vec4 specular = light.specular * spec * specularStrength;  
 
-	float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
-    vec4 specular = light.specular * specularStrength * spec * light.color;
-    //    if ( dot ( worldNormal , lightDir ) < 0.0) {
-    //        specular = vec4 (0.0 , 0.0 , 0.0 , 0.0);
-    //    }
     return (ambient + diffuse + specular);
 }
 
@@ -127,12 +124,12 @@ vec4 CalcSpotLight(Lights light){
     // ambient
     vec4 ambient = light.ambient  * amb * light.color;
     
-    vec3 lightDir = normalize(light.position - worldPos.xyz);
+    vec3 lightDir = normalize(light.position - vec3(worldPos / worldPos.w));
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
     vec4 diffuse = light.diffuse  * diff * diffIntensity * light.color;
     
     // specular
-    vec3 viewDir = normalize(cameraPos - worldPos.xyz);
+    vec3 viewDir = normalize(cameraPos - vec3(worldPos / worldPos.w));
     vec3 reflectDir = reflect(-lightDir, worldNormal); 
 
     float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
@@ -146,7 +143,7 @@ vec4 CalcSpotLight(Lights light){
     specular *= intensity;
     
     // attenuation
-    float distance = length(light.position - worldPos.xyz);
+    float distance = length(light.position - vec3(worldPos / worldPos.w));
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
     ambient  *= attenuation; 
     diffuse   *= attenuation;

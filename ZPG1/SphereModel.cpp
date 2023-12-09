@@ -23,7 +23,7 @@ SphereModel::SphereModel()
 
 }
 
-void SphereModel::DrawModel()
+void SphereModel::DrawModel(int id)
 {
 	glStencilFunc(GL_ALWAYS, id, 0xFF);
 	glDrawArrays(GL_TRIANGLES, 0, 2880);

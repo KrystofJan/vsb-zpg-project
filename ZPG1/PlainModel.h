@@ -6,6 +6,6 @@ class PlainModel : public Model
 
 public:
 	PlainModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

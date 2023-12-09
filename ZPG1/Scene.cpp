@@ -1,12 +1,6 @@
 #include "Scene.h"
 
 Scene::Scene() {
-	//glm::mat4x3 B = glm::mat4x3(glm::vec3(-20, 0, -5),
-	//	glm::vec3(2, 0, -5),
-	//	glm::vec3(-4, 0, 10),
-	//	glm::vec3(-5, 0, 10));
-
-	//b = new BezierCurve(B);
 	glfwSetErrorCallback([](int error, const char* description)-> void { CallbackController::getInstance().error_callback(error, description); });
 	if (!glfwInit()) {
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
@@ -40,6 +34,80 @@ Scene::Scene() {
 	int major, minor, revision;
 	glfwGetVersion(&major, &minor, &revision);
 	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
+
+	// tree definition
+	treeModel = new TreeModel();
+	treeMaterial = new Material(
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
+		glm::vec4(1, 1, 1, 1.0), //diffuse
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
+		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
+		16 // specular intensity
+	);
+	treeTexture = new Texture2D("textures/models/tree.png");
+
+
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 0),
+				glm::vec3(10, 0, 0),
+				glm::vec3(10, 0, 10),
+				glm::vec3(0, 0, 10)
+			)
+		)
+	);
+
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 10),
+				glm::vec3(-10, 0, 10),
+				glm::vec3(-10, 0, 20),
+				glm::vec3(0, 0, 20)
+			)
+		)
+	);
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 20),
+				glm::vec3(-10, 0, 20),
+				glm::vec3(-10, 0, 30),
+				glm::vec3(0, 0, 30)
+			)
+		)
+	);
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 30),
+				glm::vec3(-10, 0, 30),
+				glm::vec3(-10, 0, 20),
+				glm::vec3(0, 0, 20)
+			)
+		)
+	);	
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 20),
+				glm::vec3(-10, 0, 20),
+				glm::vec3(-10, 0, 10),
+				glm::vec3(0, 0, 10)
+			)
+		)
+	);
+	bezierSequence->curves.push_back(
+		new BezierCurve(
+			glm::mat4x3(
+				glm::vec3(0, 0, 10),
+				glm::vec3(10, 0, 10),
+				glm::vec3(10, 0, 0),
+				glm::vec3(0, 0, 0)
+			)
+		)
+	);
 }
 
 bool Scene::isWindowClosed() {
@@ -65,7 +133,7 @@ void Scene::displayTransform() {
 }
 void Scene::display() {
 	if (CallBacks::clicked) {
-		// plantTreeToCursor();
+		plantTreeToCursor();
 		CallBacks::clicked = false;
 	}
 
@@ -98,16 +166,10 @@ void Scene::plantTreeToCursor()
 	initT->addTransformation(new ScaleTransformation(0.01));
 
 	DrawableModel* tree = new DrawableModel(
-		new TreeModel(),
-		new Material(
-			glm::vec4(0.1, 0.1, 0.1, 1.0),	// ambient
-			glm::vec4(0.385, 0.647, 0.812, 1.0),  // diffuse
-			glm::vec4(1.0, 1.0, 1.0, 1.0), // specStrength
-			glm::vec4(0.3, 0.9, 0.4, 1.0), // color
-			8 // specIntensity
-		),
-		// tr->getTextureAt(1),
-		new PhongShaderMultipleLights(camera, lightRepository),
+		treeModel,
+		treeMaterial,
+		treeTexture,
+		treeShader,
 		initT,
 		new TransformationComposite(initT->applyTransformation())
 	);
@@ -118,28 +180,38 @@ void Scene::plantTreeToCursor()
 
 void Scene::travelOnLine(int index)
 {
-	drawableModels[index]->transformations->resetComposite();
+	drawableModels[index]->transformations->resetComposite(/*glm::mat4(1)*/);
 	drawableModels[index]->transformations->addTransformation(new TranslationTransformation(b->calculatePoint()));
 }
 
-void Scene::travelBrezier()
+void Scene::travelBezier()
 {
 	if (b != nullptr) {
-		drawableModels[stencil_id]->transformations->resetComposite();
-		drawableModels[stencil_id]->transformations->addTransformation(new TranslationTransformation(b->calculatePoint()));
+
+		for (int i = 0; i < drawableModels.size(); i++) {
+
+			if (drawableModels[i]->compareIdToStencil(stencil_id) && !bezierSequence->isFinished())
+			{ 
+				drawableModels[i]->transformations->resetComposite(/*drawableModels[i]->initTransformations->applyTransformation()*/);
+				drawableModels[i]->transformations->addTransformation(new TranslationTransformation(bezierSequence->calculatePoint()));
+				drawableModels[i]->transformations->addTransformation(drawableModels[i]->initTransformations);
+
+				break;
+			}
+		}
+
 	}
-	else if (bezierBuilder->getStep() < 5 && CallBacks::moveObj) {
+	else if (bezierBuilder->getStep() < 5 && CallBacks::moveObj && CallBacks::stencil_id != 1) {
 		bezierBuilder->handleAssignment();
 		CallBacks::moveObj = false;
 	}
-	else if (bezierBuilder->getStep() == 5){
+	else if (bezierBuilder->getStep() == 5 && CallBacks::stencil_id != 1){
 		bezier = bezierBuilder->buildBezier();
 		b = new BezierCurve(bezier);
 		stencil_id = bezierBuilder->getStencil();
 		CallBacks::moveObj = false;
 	}
-
-
 }
+
 
 

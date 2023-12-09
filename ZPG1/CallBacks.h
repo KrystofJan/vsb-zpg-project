@@ -14,6 +14,7 @@ public:
 	static int stencil_id;
 	static bool plantTree;
 	static bool moveObj;
+	static bool shoot;
 
 	static void error_callback(int error, const char* description);
 

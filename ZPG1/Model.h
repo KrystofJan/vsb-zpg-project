@@ -21,13 +21,12 @@ protected:
 	GLuint VAO;
 	int vertexCount;
 	std::vector<float> modelData;
-	int id;
 
 public:
 	Model();
 	Model(std::string path);
 	void BindModel();
-	virtual void DrawModel();
+	virtual void DrawModel(int id);
 
 };
 

@@ -4,6 +4,6 @@ class CubeModel : public Model
 {
 public:
 	CubeModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

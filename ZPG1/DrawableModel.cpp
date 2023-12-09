@@ -1,8 +1,11 @@
 #include "DrawableModel.h"
 
+static int index = 1;
 DrawableModel::DrawableModel(Model* mod, Material* mat, Texture* te, Shader* s,
 	TransformationComposite* it, TransformationComposite* t) 
 {
+	index++;
+	this->id = index;
 	this->model = mod;
 	this->material = mat;
 	this->shader = s;
@@ -11,8 +14,24 @@ DrawableModel::DrawableModel(Model* mod, Material* mat, Texture* te, Shader* s,
 	this->texture = te;
 }
 
+DrawableModel::DrawableModel(Model* mod, Material* mat, Texture* te, Shader* s,
+	TransformationComposite* it, TransformationComposite* t, bool isEnemy)
+{
+	index++;
+	this->id = index;
+	this->model = mod;
+	this->material = mat;
+	this->shader = s;
+	this->initTransformations = it;
+	this->transformations = t;
+	this->texture = te;
+	this->isEnemy = isEnemy;
+}
+
 DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s, TransformationComposite* it, TransformationComposite* t)
 {
+	index++;
+	this->id = index;
 	this->model = mod;
 	this->material = mat;
 	this->shader = s;
@@ -21,10 +40,15 @@ DrawableModel::DrawableModel(Model* mod, Material* mat, Shader* s, Transformatio
 }
 
 
+
 glm::mat4 DrawableModel::getUpdatingTransformationModelMatrix()
 {
 	return this->transformations->getModelMatrix();
 }
+
+//void DrawableModel::assignNewInitialTransformationComposite(TransformationComposite* tc) {
+//	this->initTransformations = tc;
+//}
 
 void DrawableModel::Display() {
 	//this->initTransformations->applyTransformations();
@@ -37,7 +61,7 @@ void DrawableModel::Display() {
 	this->shader->update();
 
 	this->model->BindModel();
-	this->model->DrawModel();
+	this->model->DrawModel(this->id);
 
 	this->shader->deactivateShaderProgram();
 }
@@ -63,5 +87,10 @@ void DrawableModel::DisplayDry() {
 	this->shader->update();
 
 	this->model->BindModel();
-	this->model->DrawModel();
+	this->model->DrawModel(id);
+}
+
+bool DrawableModel::compareIdToStencil(int id)
+{
+	return (this->id == id);
 }

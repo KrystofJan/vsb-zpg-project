@@ -24,6 +24,6 @@ TexturedPlainModel::TexturedPlainModel()
 }
 
 
-void TexturedPlainModel::DrawModel() {
+void TexturedPlainModel::DrawModel(int id) {
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

@@ -5,5 +5,5 @@ class TexturedPlainModel : public Model
 
 public:
 	TexturedPlainModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };

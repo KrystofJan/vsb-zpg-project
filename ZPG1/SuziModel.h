@@ -7,6 +7,6 @@ class SuziModel : public Model
 
 public:
 	SuziModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

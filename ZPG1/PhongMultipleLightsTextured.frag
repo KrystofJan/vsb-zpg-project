@@ -3,7 +3,7 @@ in vec4 worldPos;
 in vec3 worldNormal;
 in vec2 tex;
 out vec4 out_Color;
-#define MAX_LIGHTS 4
+#define MAX_LIGHTS 8
 
 struct Lights {
     int type;
@@ -62,7 +62,7 @@ void main(void) {
     out_Color = texture(textureUnitID, tex) *  result;
 }
 vec4 CalcBaseLight(Lights l){
-    vec3 lightDir = normalize(l.position - worldPos.xyz);
+    vec3 lightDir = normalize(l.position - vec3(worldPos / worldPos.w));
     vec4 ambient = amb * l.color;
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
     vec4 diffuse = diff * l.color * diffIntensity;
@@ -79,7 +79,7 @@ vec4 CalcBaseLight(Lights l){
     return (ambient + diffuse + specular) ;
 }
 vec4 CalcPointLight(Lights light){
-    vec3 lightDir = normalize(light.position - worldPos.xyz);
+    vec3 lightDir = normalize(light.position - vec3(worldPos / worldPos.w));
     vec4 ambient = light.ambient  * amb * light.color;
 
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
@@ -108,32 +108,30 @@ vec4 CalcPointLight(Lights light){
 vec4 CalcDirectionalLight(Lights light){
     vec3 lightDir = normalize(-light.direction);
 
-    vec4 ambient = light.ambient  * amb * light.color;
+    float diff = max(dot(lightDir, worldNormal), 0.0);
 
-    float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
-    vec4 diffuse = light.diffuse  * diff * diffIntensity * light.color;
+    
+    vec3 viewDir = normalize(cameraPos - vec3(worldPos / worldPos.w));
+    vec3 reflectDir = reflect(-lightDir, worldNormal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), powExponent);
 
-    vec3 viewDir = normalize(cameraPos - worldPos.xyz);
-    vec3 reflectDir = reflect(-lightDir, worldNormal); 
+    vec4 ambient = light.ambient;
+    vec4 diffuse = light.diffuse * diff;
+    vec4 specular = light.specular * spec;
 
-	float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
-    vec4 specular = light.specular * specularStrength * spec * light.color;
-    //    if ( dot ( worldNormal , lightDir ) < 0.0) {
-    //        specular = vec4 (0.0 , 0.0 , 0.0 , 0.0);
-    //    }
-    return (ambient + diffuse + specular);
+    return (ambient + diffuse + specular) * light.color;
 }
 
 vec4 CalcSpotLight(Lights light){
     // ambient
     vec4 ambient = light.ambient  * amb * light.color;
     
-    vec3 lightDir = normalize(light.position - worldPos.xyz);
+    vec3 lightDir = normalize(light.position - vec3(worldPos / worldPos.w));
     float diffIntensity = max(dot(lightDir ,worldNormal), 0.0);
     vec4 diffuse = light.diffuse  * diff * diffIntensity * light.color;
     
     // specular
-    vec3 viewDir = normalize(cameraPos - worldPos.xyz);
+    vec3 viewDir = normalize(cameraPos - vec3(worldPos / worldPos.w));
     vec3 reflectDir = reflect(-lightDir, worldNormal); 
 
     float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
@@ -147,13 +145,13 @@ vec4 CalcSpotLight(Lights light){
     specular *= intensity;
     
     // attenuation
-    float distance = length(light.position - worldPos.xyz);
+    float distance = length(light.position - vec3(worldPos / worldPos.w));
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));    
     ambient  *= attenuation; 
     diffuse   *= attenuation;
     specular *= attenuation;   
         
-    return (diffuse + specular);
+    return (ambient + diffuse + specular);
 
 }
 

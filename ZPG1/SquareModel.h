@@ -11,5 +11,5 @@ private:
 	};
 public:
 	SquareModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };

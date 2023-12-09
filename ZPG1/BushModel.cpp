@@ -19,7 +19,7 @@ BushModel::BushModel()
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 }
 
-void BushModel::DrawModel()
+void BushModel::DrawModel(int id)
 {
 	glDrawArrays(GL_TRIANGLES, 0, 8730);
 }

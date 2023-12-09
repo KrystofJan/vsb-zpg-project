@@ -20,7 +20,7 @@ SuziModel::SuziModel()
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 }
 
-void SuziModel::DrawModel()
+void SuziModel::DrawModel(int id)
 {
 	glDrawArrays(GL_TRIANGLES, 0, 2904);
 }

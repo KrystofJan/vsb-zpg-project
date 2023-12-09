@@ -134,12 +134,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BezierCurve.cpp" />
+    <ClCompile Include="BezierSequence.cpp" />
     <ClCompile Include="BlinnShader.cpp" />
     <ClCompile Include="BlueShader.cpp" />
     <ClCompile Include="BezierBuilder.cpp" />
     <ClCompile Include="ClickTestScene.cpp" />
     <ClCompile Include="ConstantShader.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="DirLightScene.cpp" />
     <ClCompile Include="DrawableSkyBox.cpp" />
     <ClCompile Include="ForestScene.cpp" />
     <ClCompile Include="GiftModel.cpp" />
@@ -204,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BezierCurve.h" />
+    <ClInclude Include="BezierSequence.h" />
     <ClInclude Include="BlinnShader.h" />
     <ClInclude Include="BlueShader.h" />
     <ClInclude Include="BezierBuilder.h" />
@@ -211,6 +214,7 @@
     <ClInclude Include="ConstantShader.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="DirLightScene.h" />
     <ClInclude Include="DrawableSkyBox.h" />
     <ClInclude Include="ForestScene.h" />
     <ClInclude Include="Gift.h" />

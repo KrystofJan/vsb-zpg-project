@@ -5,6 +5,6 @@ class GiftModel : public Model
 {
 public:
 	GiftModel();
-	void DrawModel();
+	void DrawModel(int id);
 };
 

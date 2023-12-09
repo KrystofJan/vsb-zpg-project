@@ -5,5 +5,5 @@ class SkyCubeModel : public Model
 {
 public:
 	SkyCubeModel();
-	void DrawModel();
+	void DrawModel(int id);
 };

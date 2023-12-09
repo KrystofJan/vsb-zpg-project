@@ -59,6 +59,7 @@
 #include "Line.h"
 #include "BezierCurve.h"
 #include "BezierBuilder.h"
+#include "BezierSequence.h"
 
 class Scene
 {
@@ -73,8 +74,14 @@ protected:
 	GLFWwindow* window;
 	Camera* camera;
 	LightRepository* lightRepository;
+	TreeModel* treeModel;
+	Material* treeMaterial;
+	Texture2D* treeTexture;
+	PhongMultipleLightsTextured* treeShader;
 	BezierBuilder* bezierBuilder;
 
+	BezierSequence* bezierSequence = new BezierSequence();
+	TransformationComposite* bezierComposite = new TransformationComposite();
 	glm::mat4x3 bezier;
 
 
@@ -90,7 +97,7 @@ public:
 	void setMouseMoveCallback();
 	void plantTreeToCursor();
 	void travelOnLine(int index);
-	void travelBrezier();
+	void travelBezier();
 	void virtual display();
 };
 

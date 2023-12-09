@@ -17,7 +17,7 @@ CubeModel::CubeModel()
 	glEnableVertexAttribArray(1);
 }
 
-void CubeModel::DrawModel()
+void CubeModel::DrawModel(int id)
 {
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }

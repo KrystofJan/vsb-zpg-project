@@ -1,15 +1,13 @@
 #include "Model.h"
 
-static int count = 1;
 
 Model::Model() 
 {
-    id = count++;
+    
 }
 
 Model::Model(std::string path)
 {
-    id = count++;
     modelData = loadModel(path);
 }
 
@@ -72,7 +70,7 @@ void Model::BindModel() {
 	glBindVertexArray(this->VAO);
 }
 
-void Model::DrawModel()
+void Model::DrawModel(int id)
 {
     glStencilFunc(GL_ALWAYS, id, 0xFF);
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);

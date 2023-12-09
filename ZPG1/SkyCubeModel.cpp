@@ -15,7 +15,7 @@ SkyCubeModel::SkyCubeModel()
 	glEnableVertexAttribArray(0);
 }
 
-void SkyCubeModel::DrawModel()
+void SkyCubeModel::DrawModel(int id)
 {
     // glClear(GL_DEPTH_BUFFER_BIT);
     glDepthMask(GL_FALSE);

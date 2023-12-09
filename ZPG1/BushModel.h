@@ -5,6 +5,6 @@ class BushModel : public Model
 {
 public:
 	BushModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

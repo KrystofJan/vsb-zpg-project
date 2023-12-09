@@ -14,5 +14,5 @@ void DrawableSkyBox::DisplayDry()
 	this->shader->update();
 
 	this->model->BindModel();
-	this->model->DrawModel();
+	this->model->DrawModel(id);
 }

@@ -19,7 +19,7 @@ GiftModel::GiftModel() {
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 }
 
-void GiftModel::DrawModel()
+void GiftModel::DrawModel(int id)
 {
 	glDrawArrays(GL_TRIANGLES, 0, 66624);
 }

@@ -11,6 +11,6 @@ private:
 	};
 public:
 	TriangleModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

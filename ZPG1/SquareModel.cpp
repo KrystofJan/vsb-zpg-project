@@ -17,7 +17,7 @@ SquareModel::SquareModel()
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(this->points[1]), (GLvoid*)sizeof(this->points[1][0]));
 }
 
-void SquareModel::DrawModel()
+void SquareModel::DrawModel(int id)
 {
 	// draw squares
 	glDrawArrays(GL_QUADS, 0, 4); //mode,first,count

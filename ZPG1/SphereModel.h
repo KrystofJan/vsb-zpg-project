@@ -6,6 +6,6 @@ class SphereModel : public Model
 
 public:
 	SphereModel();
-	void DrawModel() override;
+	void DrawModel(int id) override;
 };
 

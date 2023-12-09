@@ -17,7 +17,7 @@ TriangleModel::TriangleModel()
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(this->points[1]), (GLvoid*)sizeof(this->points[1][0]));
 }
 
-void TriangleModel::DrawModel() {
+void TriangleModel::DrawModel(int id) {
 	// draw triangles
 	glDrawArrays(GL_TRIANGLES, 0, 3); //mode,first,count
 }

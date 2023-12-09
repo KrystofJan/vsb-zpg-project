@@ -22,7 +22,7 @@ PlainModel::PlainModel()
 
 }
 
-void PlainModel::DrawModel()
+void PlainModel::DrawModel(int id)
 {
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
