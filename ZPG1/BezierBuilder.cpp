@@ -58,3 +58,8 @@ void BezierBuilder::assignBezierPoint(int index)
  {
 	 return stencil_id;
  }
+
+ void BezierBuilder::reset()
+ {
+	 step = 0;
+ }

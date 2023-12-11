@@ -56,5 +56,5 @@ glm::mat4 TransformationComposite::getModelMatrix()
 void TransformationComposite::resetComposite(/*glm::mat4 mat*/)
 {
 	transformations.clear();
-	this->modelMatrix = glm::mat4(1) /*mat*/;
+	this->modelMatrix = glm::mat4(1);
 }

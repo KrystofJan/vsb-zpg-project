@@ -33,4 +33,5 @@ public:
 	glm::mat4x3 buildBezier();
 	int getStep();
 	int getStencil();
+	void reset();
 };

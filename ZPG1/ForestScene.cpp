@@ -37,7 +37,7 @@ void ForestScene::initScene()
 	);
 	lightRepository->addLight(dl);
 
-	 TextureRepository* tex = new TextureRepository();
+	 tex = new TextureRepository();
 
 
 	 tex->addTexture(new TextureCubeMap(

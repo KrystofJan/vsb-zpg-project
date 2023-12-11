@@ -86,9 +86,11 @@ glm::vec3  Camera::getPosition()
 {
     return this->cameraPos;
 }
+
 glm::vec3 Camera::getDirection() {
     return this->cameraFront;
 }
+
 glm::vec3 Camera::unProjectCameraPos(glm::vec3 position)
 {
     int width, height;
@@ -96,6 +98,7 @@ glm::vec3 Camera::unProjectCameraPos(glm::vec3 position)
     glm::vec4 viewPort = glm::vec4(0, 0, width, height);
     return  glm::unProject(position, viewMatrix, projectionMatrix, viewPort);
 }
+
 glm::mat4 Camera::getProjectionMatrix()
 {
     int width, height;

@@ -3,6 +3,7 @@
 
 TreeModel::TreeModel() : Model("models/tree.obj")
 {
+	this->type = "tree";
 	this->VBO = 0;
 	glGenBuffers(1, &this->VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);

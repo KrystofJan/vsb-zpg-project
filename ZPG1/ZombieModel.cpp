@@ -2,6 +2,7 @@
 
 ZombieModel::ZombieModel() : Model("models/zombie.obj")
 {
+	this->type = "zombie";
 	this->VBO = 0;
 	glGenBuffers(1, &this->VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);

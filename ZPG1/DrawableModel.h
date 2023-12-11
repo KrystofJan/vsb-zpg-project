@@ -24,5 +24,6 @@ public:
 	void assignNewInitialTransformationComposite(TransformationComposite* tc);
 	virtual void DisplayDry();
 	bool compareIdToStencil(int id);
+	std::string getType();
 	void Display();
 };

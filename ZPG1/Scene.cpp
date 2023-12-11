@@ -35,17 +35,6 @@ Scene::Scene() {
 	glfwGetVersion(&major, &minor, &revision);
 	printf("Using GLFW %i.%i.%i\n", major, minor, revision);
 
-	// tree definition
-	treeModel = new TreeModel();
-	treeMaterial = new Material(
-		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
-		glm::vec4(1, 1, 1, 1.0), //diffuse
-		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
-		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
-		16 // specular intensity
-	);
-	treeTexture = new Texture2D("textures/models/tree.png");
-
 
 	bezierSequence->curves.push_back(
 		new BezierCurve(
@@ -72,8 +61,8 @@ Scene::Scene() {
 		new BezierCurve(
 			glm::mat4x3(
 				glm::vec3(0, 0, 20),
-				glm::vec3(-10, 0, 20),
-				glm::vec3(-10, 0, 30),
+				glm::vec3(10, 0, 20),
+				glm::vec3(10, 0, 30),
 				glm::vec3(0, 0, 30)
 			)
 		)
@@ -82,8 +71,8 @@ Scene::Scene() {
 		new BezierCurve(
 			glm::mat4x3(
 				glm::vec3(0, 0, 30),
-				glm::vec3(-10, 0, 30),
-				glm::vec3(-10, 0, 20),
+				glm::vec3(10, 0, 30),
+				glm::vec3(10, 0, 20),
 				glm::vec3(0, 0, 20)
 			)
 		)
@@ -108,6 +97,40 @@ Scene::Scene() {
 			)
 		)
 	);
+
+	// loadModels();
+}
+
+void Scene::loadModels() {
+	treeModel = new TreeModel();
+	treeMaterial = new Material(
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
+		glm::vec4(1, 1, 1, 1.0), //diffuse
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
+		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
+		16 // specular intensity
+	);
+	treeTexture = new Texture2D("textures/models/tree.png");
+	tex->addTexture(treeTexture);
+
+	treeTexture->Bind();
+
+	zombieModel = new ZombieModel();
+	zombieMaterial = new Material(
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
+		glm::vec4(1, 1, 1, 1.0), //diffuse
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
+		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
+		16 // specular intensity
+	);
+	zombieTexture = new Texture2D("textures/models/zombie.png");
+	tex->addTexture(zombieTexture);
+	zombieTexture->Bind();
+	houseModel = new HouseModel();
+	houseMaterial = new Material();
+	houseTexture = new Texture2D("textures/models/house.png");
+	tex->addTexture(houseTexture);
+
 }
 
 bool Scene::isWindowClosed() {
@@ -160,21 +183,64 @@ void Scene::setMouseMoveCallback()
 
 void Scene::plantTreeToCursor()
 {
-	glm::vec3 position = this->camera->unProjectCameraPos(CallBacks::position);
-	TransformationComposite* initT = new TransformationComposite();
-	initT->addTransformation(new TranslationTransformation(position));
-	initT->addTransformation(new ScaleTransformation(0.01));
 
-	DrawableModel* tree = new DrawableModel(
-		treeModel,
-		treeMaterial,
-		treeTexture,
-		treeShader,
-		initT,
-		new TransformationComposite(initT->applyTransformation())
-	);
+	if (picked_id > 0) {
+		glm::vec3 position = this->camera->unProjectCameraPos(CallBacks::position);
+		TransformationComposite* initT = new TransformationComposite();
+		initT->addTransformation(new TranslationTransformation(position));
+		initT->addTransformation(new ScaleTransformation(0.1));
 
-	drawableModels.push_back(tree);
+		DrawableModel* model;
+		if (pickedType == "tree") {
+			model = new DrawableModel(
+				treeModel,
+				treeMaterial,
+				treeTexture,
+				treeShader,
+				initT,
+				new TransformationComposite(initT->applyTransformation())
+			);
+			drawableModels.push_back(model);
+
+		}
+		else if (pickedType == "zombie") {
+			model = new DrawableModel(
+				zombieModel,
+				zombieMaterial,
+				zombieTexture,
+				zombieShader,
+				initT,
+				new TransformationComposite(initT->applyTransformation()),
+				true
+			);
+			drawableModels.push_back(model);
+
+		}
+		else if (pickedType == "house") {
+			model = new DrawableModel(
+				houseModel,
+				houseMaterial,
+				houseTexture,
+				houseShader,
+				initT,
+				new TransformationComposite(initT->applyTransformation())
+			);
+			drawableModels.push_back(model);
+
+		}
+		picked_id = -1;
+		return;
+	}
+
+	for (int i = 0; i < drawableModels.size(); i++) {
+
+		if (drawableModels[i]->compareIdToStencil(CallBacks::stencil_id) )
+		{
+			pickedType = drawableModels[i]->getType();
+			picked_id = CallBacks::stencil_id;
+			break;
+		}
+	}
 	CallBacks::plantTree = false;
 }
 
@@ -201,17 +267,14 @@ void Scene::travelBezier()
 		}
 
 	}
-	else if (bezierBuilder->getStep() < 5 && CallBacks::moveObj && CallBacks::stencil_id != 1) {
+	else if (bezierBuilder->getStep() < 1 && CallBacks::moveObj && CallBacks::stencil_id != 1) {
 		bezierBuilder->handleAssignment();
 		CallBacks::moveObj = false;
 	}
-	else if (bezierBuilder->getStep() == 5 && CallBacks::stencil_id != 1){
+	else if (bezierBuilder->getStep() == 1 && CallBacks::stencil_id != 1){
 		bezier = bezierBuilder->buildBezier();
 		b = new BezierCurve(bezier);
 		stencil_id = bezierBuilder->getStencil();
 		CallBacks::moveObj = false;
 	}
 }
-
-
-

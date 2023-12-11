@@ -20,7 +20,7 @@ void DirLightScene::initScene()
 	TransformationComposite* initTerrainTran = new TransformationComposite();
 	initTerrainTran->addTransformation(new ScaleTransformation(.3));
 	TransformationComposite* updateTerrainTran = new TransformationComposite(initTerrainTran->applyTransformation());
-	TextureRepository* tex = new TextureRepository();
+	tex = new TextureRepository();
 
 	tex->addTexture(new Texture2D("textures/models/grass.png"));
 

@@ -110,7 +110,6 @@ vec4 CalcDirectionalLight(Lights light){
 
     float diff = max(dot(lightDir, worldNormal), 0.0);
 
-    
     vec3 viewDir = normalize(cameraPos - vec3(worldPos / worldPos.w));
     vec3 reflectDir = reflect(-lightDir, worldNormal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), powExponent);

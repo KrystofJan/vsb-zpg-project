@@ -15,11 +15,11 @@ void Shader::update()
 {
 	this->updateLights();
 
+	this->camera->controls();
+
 	this->updateUniformLocation("projectionMatrix", &this->camera->getProjectionMatrix()[0][0]);
 	this->updateUniformLocation("viewMatrix", &this->camera->getViewMatrix()[0][0]);
 	this->updateUniformLocation("cameraPos", this->camera->getPosition());
-
-	this->camera->controls();
 }
 
 void Shader::updateLights()

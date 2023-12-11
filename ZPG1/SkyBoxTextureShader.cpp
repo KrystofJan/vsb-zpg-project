@@ -7,10 +7,10 @@ SkyBoxTextureShader::SkyBoxTextureShader(Camera* c, LightRepository* light)
 
 void SkyBoxTextureShader::update()
 {
+	this->camera->controls();
 
 	this->updateUniformLocation("projectionMatrix", &this->camera->getProjectionMatrix()[0][0]);
 	this->updateUniformLocation("viewMatrix", glm::mat4(glm::mat3(this->camera->getViewMatrix())));
 	this->updateUniformLocation("cameraPos", this->camera->getPosition());
 
-	this->camera->controls();
 }

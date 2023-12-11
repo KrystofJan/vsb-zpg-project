@@ -2,6 +2,7 @@
 
 HouseModel::HouseModel(): Model("models/model.obj")
 {
+	this->type = "house";
 	this->VBO = 0;
 	glGenBuffers(1, &this->VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);

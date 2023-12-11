@@ -45,16 +45,16 @@ void main(void) {
     for(int i = 0; i < ammountOfLights; i++)
     {
         if (lights[i].type == 0){
-            // result += CalcBaseLight(lights[i]);
+            result += CalcBaseLight(lights[i]);
         }
         if (lights[i].type == 1){
             result += CalcDirectionalLight(lights[i]);
         }
         if (lights[i].type == 2){
-           //  result += CalcPointLight(lights[i]);
+            result += CalcPointLight(lights[i]);
         }
         if (lights[i].type == 3){
-            // result += CalcSpotLight(lights[i]);
+            result += CalcSpotLight(lights[i]);
         }
     }
         
@@ -135,7 +135,7 @@ vec4 CalcSpotLight(Lights light){
     float spec = pow(max(dot(viewDir,reflectDir ), 0.0), powExponent);
     vec4 specular = light.specular * specularStrength * spec * light.color;
     
-    // spotlight (soft edges)
+    // soft edges
     float theta = dot(lightDir, normalize(-light.direction)); 
     float epsilon = (light.cutOff - light.outerCutOff);
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);

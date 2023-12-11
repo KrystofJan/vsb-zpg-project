@@ -11,7 +11,7 @@ void Texture2D::Bind() {
 	glActiveTexture(GL_TEXTURE0 + texturePosition);
 	this->textureId = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 	
-	if (this->textureId == 0) {
+	if (this->textureId < 0) {
 		std::cout << "An error occurred while loading image." << std::endl;
 		exit(EXIT_FAILURE);
 	}

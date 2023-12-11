@@ -67,26 +67,47 @@ private:
 	int* mouseX;
 	int* mouseY;
 	DrawableModel* tree;
+	string pickedType = "NaN";
 	BezierCurve* b = nullptr;
 	int stencil_id = -1;
+	int picked_id = -1;
 protected:
 	std::vector<DrawableModel*> drawableModels;
 	GLFWwindow* window;
 	Camera* camera;
 	LightRepository* lightRepository;
-	TreeModel* treeModel;
-	Material* treeMaterial;
-	Texture2D* treeTexture;
+	
+	TextureRepository* tex;
+
 	PhongMultipleLightsTextured* treeShader;
 	BezierBuilder* bezierBuilder;
+
 
 	BezierSequence* bezierSequence = new BezierSequence();
 	TransformationComposite* bezierComposite = new TransformationComposite();
 	glm::mat4x3 bezier;
 
 
+	ZombieModel* zombieModel;
+	Material* zombieMaterial;
+	Texture2D* zombieTexture;
+	Shader* zombieShader;
+
+	HouseModel* houseModel;
+	Material* houseMaterial;
+	Texture2D* houseTexture;
+	Shader* houseShader;
+
+	TreeModel* treeModel;
+	Material* treeMaterial;
+	Texture2D* treeTexture;
+
+	DrawableModel* pickedModel;
+	TransformationComposite* pickedInitTransformations;
+
 public:
 	Scene();
+	virtual void loadModels();
 	virtual void initScene() = 0;
 	bool isWindowClosed();
 	void swapBuffer();

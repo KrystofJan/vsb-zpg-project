@@ -50,8 +50,8 @@ glm::mat4 DrawableModel::getUpdatingTransformationModelMatrix()
 //	this->initTransformations = tc;
 //}
 
+// TODO: change API to change display -> display dry
 void DrawableModel::Display() {
-	//this->initTransformations->applyTransformations();
 	this->shader->activateShaderProgram();
 
 	this->shader->updateUniformLocation("modelMatrix", &this->initTransformations->getModelMatrix()[0][0]);
@@ -65,7 +65,6 @@ void DrawableModel::Display() {
 
 	this->shader->deactivateShaderProgram();
 }
-
 
 
 void DrawableModel::DisplayDry() {
@@ -88,9 +87,18 @@ void DrawableModel::DisplayDry() {
 
 	this->model->BindModel();
 	this->model->DrawModel(id);
+
 }
+
+
+
 
 bool DrawableModel::compareIdToStencil(int id)
 {
 	return (this->id == id);
+}
+
+std::string DrawableModel::getType()
+{
+	return model->getType();
 }

@@ -4,9 +4,10 @@
 
 void HouseScene::initScene()
 {
+
 	float pos = 3;
 	lightRepository = new LightRepository();
-
+	loadModels();
 	this->flashlight = new SpotLight(
 		camera->getPosition(),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
@@ -24,11 +25,11 @@ void HouseScene::initScene()
 
 	lightRepository->addLight(
 		new PointLight(
-			glm::vec3(-2.0, 1, -4),
-			glm::vec4(1.0, 1.0, 1.0, 1.0),
-			0.4f,
-			0.4f,
-			0.1f,
+			glm::vec3(-2.0, .5, -4),
+			glm::vec4(1.0, 0.0, 0.0, 1.0),
+			1.f,
+			0.01f,
+			0.001f,
 			glm::vec4(0.05f, 0.05f, 0.05f, 1.0f),
 			glm::vec4(0.8f, 0.8f, 0.8f, 1.0f),
 			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
@@ -75,20 +76,20 @@ void HouseScene::initScene()
 		)
 	);
 
-	DirectionalLight* dl = new DirectionalLight(
-		glm::vec3(0.0, 10, 0),
-		glm::vec4(1.0, 1.0, 1.0, 1.0),
+	//DirectionalLight* dl = new DirectionalLight(
+	//	glm::vec3(0.0, 10, 0),
+	//	glm::vec4(1.0, 1.0, 1.0, 1.0),
 
-		glm::vec3(0.0f, -1.0f, 0.0f),
+	//	glm::vec3(0.0f, -1.0f, 0.0f),
 
-		glm::vec4(0.0, 0.0, 0.0, 1.0),
-		glm::vec4(0.4, 0.4, 0.4, 1.0),
-		glm::vec4(1.0)
-	);
+	//	glm::vec4(0.1, 0.1, 0.1, 1.0),
+	//	glm::vec4(0.4, 0.4, 0.4, 1.0),
+	//	glm::vec4(1.0)
+	//);
 
-	lightRepository->addLight(dl);
+	// lightRepository->addLight(dl);
 
-	TextureRepository* tex = new TextureRepository();
+	tex = new TextureRepository();
 
 	tex->addTexture(new TextureCubeMap(
 		"textures/nightSky/posz.bmp", "textures/nightSky/negz.bmp",
@@ -121,11 +122,11 @@ void HouseScene::initScene()
 		new DrawableModel(
 			new TerrainModel(),
 			new Material(
-				glm::vec4(0.1, 0.1, 0.1, 1.0),
-				glm::vec4(0.1, 0.1, 0.1, 1.0),
+				glm::vec4(0, 0, 0, 1.0),
+				glm::vec4(0.7, 0.7, 0.7, 1.0),
 				glm::vec4(1.0, 1.0, 1.0, 1.0),
 				glm::vec4(0.1, 0.1, 0.1, 1.0),
-				16
+				32
 			),
 			tex->getTextureAt(1),
 			new PhongMultipleLightsTextured(camera, lightRepository),
@@ -139,11 +140,12 @@ void HouseScene::initScene()
 	TransformationComposite* updateHouseTran = new TransformationComposite(true);
 	updateHouseTran->addTransformation(initHouseTran);
 
-	tex->addTexture(new Texture2D("textures/models/house.png"));
+	houseTexture = new Texture2D("textures/models/house.png");
+	tex->addTexture(houseTexture);
 
 	drawableModels.push_back(
 		new DrawableModel(
-			new HouseModel(),
+			houseModel,
 			new Material(),
 			tex->getTextureAt(2),
 			new PhongMultipleLightsTextured(camera, lightRepository),
@@ -156,9 +158,12 @@ void HouseScene::initScene()
 	treeInit->addTransformation(new TranslationTransformation(glm::vec3(5, 0, 0)));
 	treeInit->addTransformation(new ScaleTransformation(0.01));
 
-	tex->addTexture(new Texture2D("textures/models/tree.png"));
+	treeTexture = new Texture2D("textures/models/tree.png");
+	tex->addTexture(treeTexture);
 
 	treeShader = new PhongMultipleLightsTextured(camera, lightRepository);
+	zombieShader = new PhongMultipleLightsTextured(camera, lightRepository);
+	houseShader = new PhongMultipleLightsTextured(camera, lightRepository);
 
 	TransformationComposite* initZombieTran = new TransformationComposite(true);
 	initZombieTran->addTransformation(new TranslationTransformation(glm::vec3(5, 0, .5)));
@@ -168,19 +173,40 @@ void HouseScene::initScene()
 	TransformationComposite* updateZombieTran = new TransformationComposite(true);
 	updateZombieTran->addTransformation(initZombieTran);
 
-	tex->addTexture(new Texture2D("textures/models/zombie.png"));
+	zombieTexture = new Texture2D("textures/models/zombie.png");
+	tex->addTexture(zombieTexture);
 
 	drawableModels.push_back(
 		new DrawableModel(
-			new ZombieModel(),
-			new Material(),
+			zombieModel,
+			zombieMaterial,
 			tex->getTextureAt(4),
-			new TextureShader(camera, lightRepository),
+			new PhongMultipleLightsTextured(camera, lightRepository),
 			initZombieTran,
 			updateZombieTran,
 			true
 		)
 	);
+
+	// 
+	TransformationComposite* initSphereTran3 = new TransformationComposite(true);
+	initSphereTran3->addTransformation(new TranslationTransformation(glm::vec3(-3.0, .5, -4)));
+	initSphereTran3->addTransformation(new ScaleTransformation(.25));
+
+	TransformationComposite* updateSphereTran3 = new TransformationComposite(true);
+	updateSphereTran3->addTransformation(initSphereTran3);
+
+	drawableModels.push_back(
+		new DrawableModel(
+			new SphereModel(),
+			new Material(),
+			new PhongShaderMultipleLights(camera, lightRepository),
+			initSphereTran3,
+			updateSphereTran3
+		)
+	);
+
+
 	TransformationComposite* initZombieTran3 = new TransformationComposite(true);
 	initZombieTran3->addTransformation(new TranslationTransformation(glm::vec3(5.4, 0, .8)));
 	initZombieTran3->addTransformation(new ScaleTransformation(.1));
@@ -189,14 +215,13 @@ void HouseScene::initScene()
 	TransformationComposite* updateZombieTran3 = new TransformationComposite(true);
 	updateZombieTran3->addTransformation(initZombieTran3);
 
-	tex->addTexture(new Texture2D("textures/models/zombie.png"));
 
 	drawableModels.push_back(
 		new DrawableModel(
-			new ZombieModel(),
-			new Material(),
+			zombieModel,
+			zombieMaterial,
 			tex->getTextureAt(4),
-			new TextureShader(camera, lightRepository),
+			new PhongMultipleLightsTextured(camera, lightRepository),
 			initZombieTran3,
 			updateZombieTran3,
 			true
@@ -210,14 +235,12 @@ void HouseScene::initScene()
 	TransformationComposite* updateZombieTran2 = new TransformationComposite(true);
 	updateZombieTran2->addTransformation(initZombieTran2);
 
-	tex->addTexture(new Texture2D("textures/models/zombie.png"));
-
 	drawableModels.push_back(
 		new DrawableModel(
-			new ZombieModel(),
-			new Material(),
+			zombieModel,
+			zombieMaterial,
 			tex->getTextureAt(4),
-			new TextureShader(camera, lightRepository),
+			new PhongMultipleLightsTextured(camera, lightRepository),
 			initZombieTran2,
 			updateZombieTran2,
 			true
@@ -284,6 +307,33 @@ void HouseScene::display() {
 		m->DisplayDry();
 	}
 	setWindowSizeBuffer();
+}
+
+void HouseScene::loadModels()
+{
+	treeModel = new TreeModel();
+	treeMaterial = new Material(
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
+		glm::vec4(1, 1, 1, 1.0), //diffuse
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
+		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
+		16 // specular intensity
+	);
+	treeTexture = new Texture2D("textures/models/tree.png");
+
+	zombieModel = new ZombieModel();
+	zombieMaterial = new Material(
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //ambient
+		glm::vec4(1, 1, 1, 1.0), //diffuse
+		glm::vec4(1.0, 1.0, 1.0, 1.0), //specular strength
+		glm::vec4(1.0, 1.0, 1.0, 1.0), // object color
+		16 // specular intensity
+	);
+	zombieTexture = new Texture2D("textures/models/zombie.png");
+
+	houseModel = new HouseModel();
+	houseMaterial = new Material();
+	houseTexture = new Texture2D("textures/models/house.jpg");
 }
 
 void HouseScene::shoot()

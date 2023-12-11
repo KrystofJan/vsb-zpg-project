@@ -75,3 +75,8 @@ void Model::DrawModel(int id)
     glStencilFunc(GL_ALWAYS, id, 0xFF);
     glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 }
+
+std::string Model::getType()
+{
+    return this->type;
+}

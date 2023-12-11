@@ -4,9 +4,11 @@ class HouseScene : public Scene
 {
 private:
 	SpotLight* flashlight;
+
 public:
 	void initScene() override;
 	void display() override;
+	void loadModels() override;
 	void shoot();
 };
 
